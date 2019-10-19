@@ -9,8 +9,6 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Getter
-@Setter
 @Table(name = "ai_airport")
 
 public class Airport {
@@ -27,6 +25,30 @@ public class Airport {
 
     public Airport(String name, String iata) {
         this.name = name;
+        this.iata = iata;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIata() {
+        return iata;
+    }
+
+    public void setIata(String iata) {
         this.iata = iata;
     }
 }

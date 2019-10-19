@@ -1,6 +1,8 @@
 package pl.edu.wat.airline.controller;
 
+import jdk.management.resource.ResourceRequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.entity.Airport;
 import pl.edu.wat.airline.service.AirportService;
@@ -35,13 +37,20 @@ public class AirportController {
     }
 
     @PutMapping
-    public Airport updateAirport(@RequestBody Airport airport) {
-        return airports.save(airport);
+    public Airport updateAirport(@RequestParam Long id, @RequestBody Airport airportRequest) {
+        return airports.findById(id).map(airport -> {
+            airport.setName(airportRequest.getName());
+            airport.setIata(airportRequest.getIata());
+            return airports.save(airport);
+        }).orElseThrow(() -> new ResourceRequestDeniedException("AirportId " + id + " not found."));
     }
 
     @DeleteMapping
-    public void deleteAirport(@RequestParam Long id) {
-        airports.deleteById(id);
+    public ResponseEntity<?> deleteAirport(@RequestParam Long id) {
+        return airports.findById(id).map(airport -> {
+            airports.deleteById(id);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceRequestDeniedException("AirportId " + id + " not found."));
     }
 
 }

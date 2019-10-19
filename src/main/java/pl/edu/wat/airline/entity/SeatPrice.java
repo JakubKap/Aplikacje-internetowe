@@ -8,8 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Getter
-@Setter
 @Table(name = "ai_seat_price")
 
 public class SeatPrice {
@@ -40,6 +38,86 @@ public class SeatPrice {
         this.firstClassInfantPrice = firstClassInfantPrice;
         this.economicClassChildPrice = economicClassChildPrice;
         this.businessClassChildPrice = businessClassChildPrice;
+        this.firstClassChildPrice = firstClassChildPrice;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Double getEconomicClassAdultPrice() {
+        return economicClassAdultPrice;
+    }
+
+    public void setEconomicClassAdultPrice(Double economicClassAdultPrice) {
+        this.economicClassAdultPrice = economicClassAdultPrice;
+    }
+
+    public Double getBusinessClassAdultPrice() {
+        return businessClassAdultPrice;
+    }
+
+    public void setBusinessClassAdultPrice(Double businessClassAdultPrice) {
+        this.businessClassAdultPrice = businessClassAdultPrice;
+    }
+
+    public Double getFirstClassAdultPrice() {
+        return firstClassAdultPrice;
+    }
+
+    public void setFirstClassAdultPrice(Double firstClassAdultPrice) {
+        this.firstClassAdultPrice = firstClassAdultPrice;
+    }
+
+    public Double getEconomicClassInfantPrice() {
+        return economicClassInfantPrice;
+    }
+
+    public void setEconomicClassInfantPrice(Double economicClassInfantPrice) {
+        this.economicClassInfantPrice = economicClassInfantPrice;
+    }
+
+    public Double getBusinessClassInfantPrice() {
+        return businessClassInfantPrice;
+    }
+
+    public void setBusinessClassInfantPrice(Double businessClassInfantPrice) {
+        this.businessClassInfantPrice = businessClassInfantPrice;
+    }
+
+    public Double getFirstClassInfantPrice() {
+        return firstClassInfantPrice;
+    }
+
+    public void setFirstClassInfantPrice(Double firstClassInfantPrice) {
+        this.firstClassInfantPrice = firstClassInfantPrice;
+    }
+
+    public Double getEconomicClassChildPrice() {
+        return economicClassChildPrice;
+    }
+
+    public void setEconomicClassChildPrice(Double economicClassChildPrice) {
+        this.economicClassChildPrice = economicClassChildPrice;
+    }
+
+    public Double getBusinessClassChildPrice() {
+        return businessClassChildPrice;
+    }
+
+    public void setBusinessClassChildPrice(Double businessClassChildPrice) {
+        this.businessClassChildPrice = businessClassChildPrice;
+    }
+
+    public Double getFirstClassChildPrice() {
+        return firstClassChildPrice;
+    }
+
+    public void setFirstClassChildPrice(Double firstClassChildPrice) {
         this.firstClassChildPrice = firstClassChildPrice;
     }
 }
