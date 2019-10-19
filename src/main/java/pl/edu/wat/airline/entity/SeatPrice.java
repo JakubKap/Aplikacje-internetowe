@@ -1,0 +1,45 @@
+package pl.edu.wat.airline.entity;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Entity
+@Data
+@Getter
+@Setter
+@Table(name = "ai_seat_price")
+
+public class SeatPrice {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Double economicClassAdultPrice;
+    private Double businessClassAdultPrice;
+    private Double firstClassAdultPrice;
+    private Double economicClassInfantPrice;
+    private Double businessClassInfantPrice;
+    private Double firstClassInfantPrice;
+    private Double economicClassChildPrice;
+    private Double businessClassChildPrice;
+    private Double firstClassChildPrice;
+
+    public SeatPrice() {
+    }
+
+    public SeatPrice(Double economicClassAdultPrice, Double businessClassAdultPrice, Double firstClassAdultPrice, Double economicClassInfantPrice, Double businessClassInfantPrice, Double firstClassInfantPrice, Double economicClassChildPrice, Double businessClassChildPrice, Double firstClassChildPrice) {
+        this.economicClassAdultPrice = economicClassAdultPrice;
+        this.businessClassAdultPrice = businessClassAdultPrice;
+        this.firstClassAdultPrice = firstClassAdultPrice;
+        this.economicClassInfantPrice = economicClassInfantPrice;
+        this.businessClassInfantPrice = businessClassInfantPrice;
+        this.firstClassInfantPrice = firstClassInfantPrice;
+        this.economicClassChildPrice = economicClassChildPrice;
+        this.businessClassChildPrice = businessClassChildPrice;
+        this.firstClassChildPrice = firstClassChildPrice;
+    }
+}
