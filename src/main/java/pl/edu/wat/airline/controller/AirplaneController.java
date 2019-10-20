@@ -21,6 +21,7 @@ public class AirplaneController {
         this.airplanes = airplanes;
     }
 
+    @CrossOrigin
     @GetMapping("/all_airplanes")
     public Iterable<Airplane> getAllAirplanes(){
         return airplanes.findAll();
