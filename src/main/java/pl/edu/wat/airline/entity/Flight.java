@@ -1,5 +1,6 @@
 package pl.edu.wat.airline.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -22,9 +24,15 @@ public class Flight {
     private Long id;
 
     private String flightNumber;
-    private LocalDate departureDate;
-    private LocalDate arrivalDate;
-    private LocalDate boardingDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime departureDateTime;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime arrivalDateTime;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime boardingDateTime;
+
     private String gateNumber;
     private String status;
 
@@ -43,7 +51,7 @@ public class Flight {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Airplane airplane;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "seatPrice", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SeatPrice seatPrice;
@@ -51,11 +59,11 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(String flightNumber, LocalDate departureDate, LocalDate arrivalDate, LocalDate boardingDate, String gateNumber, String status, Airport departureAirport, Airport arrivalAirport, Airplane airplane, SeatPrice seatPrice) {
+    public Flight(String flightNumber, LocalDateTime departureDate, LocalDateTime arrivalDate, LocalDateTime boardingDate, String gateNumber, String status, Airport departureAirport, Airport arrivalAirport, Airplane airplane, SeatPrice seatPrice) {
         this.flightNumber = flightNumber;
-        this.departureDate = departureDate;
-        this.arrivalDate = arrivalDate;
-        this.boardingDate = boardingDate;
+        this.departureDateTime = departureDate;
+        this.arrivalDateTime = arrivalDate;
+        this.boardingDateTime = boardingDate;
         this.gateNumber = gateNumber;
         this.status = status;
         this.departureAirport = departureAirport;
