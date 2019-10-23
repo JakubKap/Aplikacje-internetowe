@@ -1,6 +1,5 @@
 package pl.edu.wat.airline.controller;
 
-import jdk.management.resource.ResourceRequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +41,7 @@ public class AirportController {
             airport.setName(airportRequest.getName());
             airport.setIata(airportRequest.getIata());
             return airports.save(airport);
-        }).orElseThrow(() -> new ResourceRequestDeniedException("AirportId " + id + " not found."));
+        }).orElseThrow(() -> new RuntimeException("AirportId " + id + " not found."));
     }
 
     @DeleteMapping
@@ -50,7 +49,7 @@ public class AirportController {
         return airports.findById(id).map(airport -> {
             airports.deleteById(id);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceRequestDeniedException("AirportId " + id + " not found."));
+        }).orElseThrow(() -> new RuntimeException("AirportId " + id + " not found."));
     }
 
 }

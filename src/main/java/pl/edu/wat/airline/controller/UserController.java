@@ -1,6 +1,5 @@
 package pl.edu.wat.airline.controller;
 
-import jdk.management.resource.ResourceRequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +47,7 @@ public class UserController {
             user.setPassword(userRequest.getPassword());
             user.setSalt(userRequest.getSalt());
             return users.save(user);
-        }).orElseThrow(() -> new ResourceRequestDeniedException("UserId " + id + " not found."));
+        }).orElseThrow(() -> new RuntimeException("UserId " + id + " not found."));
     }
 
     @DeleteMapping
@@ -56,6 +55,6 @@ public class UserController {
         return users.findById(id).map(user -> {
             users.deleteById(id);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceRequestDeniedException("UserId " + id + " not found."));
+        }).orElseThrow(() -> new RuntimeException("UserId " + id + " not found."));
     }
 }

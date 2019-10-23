@@ -1,6 +1,5 @@
 package pl.edu.wat.airline.controller;
 
-import jdk.management.resource.ResourceRequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +44,7 @@ public class AirplaneController {
             airplane.setEconomicSeatsAmount(airplaneRequest.getEconomicSeatsAmount());
             airplane.setFirstClassSeatsAmount(airplaneRequest.getFirstClassSeatsAmount());
             return airplanes.save(airplane);
-        }).orElseThrow(() -> new ResourceRequestDeniedException("AirportId " + id + " not found."));
+        }).orElseThrow(() -> new RuntimeException("AirportId " + id + " not found."));
     }
 
     @DeleteMapping
@@ -53,6 +52,6 @@ public class AirplaneController {
         return airplanes.findById(id).map(airport -> {
             airplanes.deleteById(id);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceRequestDeniedException("AirportId " + id + " not found."));
+        }).orElseThrow(() -> new RuntimeException("AirportId " + id + " not found."));
     }
 }
