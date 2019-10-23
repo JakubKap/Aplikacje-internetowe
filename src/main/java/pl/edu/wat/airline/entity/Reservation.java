@@ -25,7 +25,7 @@ public class Reservation {
     private Boolean isOnlineCheckInMade;
     private Integer numOfAdults;
     private Integer numOfInfants;
-    private Integer Children;
+    private Integer numOfChildren;
     private String travelClass;
     private Double reservationPrice;
 

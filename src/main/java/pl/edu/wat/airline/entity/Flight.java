@@ -51,7 +51,7 @@ public class Flight {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Airplane airplane;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "seatPrice", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SeatPrice seatPrice;

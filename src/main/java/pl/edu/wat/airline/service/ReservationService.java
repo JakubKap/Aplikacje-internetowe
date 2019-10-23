@@ -3,8 +3,11 @@ package pl.edu.wat.airline.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.wat.airline.entity.Reservation;
+import pl.edu.wat.airline.entity.User;
 import pl.edu.wat.airline.repository.ReservationRepo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +35,4 @@ public class ReservationService {
     public void deleteById(Long id) {
         reservationRepo.deleteById(id);
     }
-
 }
