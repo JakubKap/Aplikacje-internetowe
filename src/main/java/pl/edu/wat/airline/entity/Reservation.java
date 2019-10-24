@@ -54,18 +54,4 @@ public class Reservation implements Serializable {
         this.flight = flight;
         this.user = user;
     }
-/*
-    public Reservation(long id, String reservationNo, boolean isReservationPaid, boolean isOnlineCheckInMade, int numOfAdults, int numOfInfants, int numOfChildren, String travelClass, double reservationPrice, Flight flight, User user) {
-        this.id = id;
-        this.reservationNo = reservationNo;
-        this.isReservationPaid = isReservationPaid;
-        this.isOnlineCheckInMade = isOnlineCheckInMade;
-        this.numOfAdults = numOfAdults;
-        this.numOfInfants = numOfInfants;
-        this.numOfChildren = numOfChildren;
-        this.travelClass = travelClass;
-        this.reservationPrice = reservationPrice;
-        this.flight = flight;
-        this.user = user;
-    }*/
 }
