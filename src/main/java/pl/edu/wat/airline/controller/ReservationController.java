@@ -31,6 +31,11 @@ public class ReservationController {
         return reservations.findById(id);
     }
 
+    @GetMapping("/user_reservation")
+    public List<Reservation> findByUserId(@RequestParam Long userId){
+        return reservations.findByUserId(userId);
+    }
+
     @PostMapping
     public Reservation addReservation(@RequestBody Reservation reservation){
         return reservations.save(reservation);

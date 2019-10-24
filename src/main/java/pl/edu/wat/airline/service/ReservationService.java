@@ -24,6 +24,10 @@ public class ReservationService {
         return reservationRepo.findById(id);
     }
 
+    public List<Reservation> findByUserId(Long userId){
+        return reservationRepo.findByUserId(userId);
+    }
+
     public Iterable<Reservation> findAll() {
         return reservationRepo.findAll();
     }
