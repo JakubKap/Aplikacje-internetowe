@@ -30,6 +30,11 @@ public class UserController {
         return users.findById(id);
     }
 
+    @GetMapping("login")
+    public Optional<User> getByLoginAndPassword(@RequestParam String login, @RequestParam String password){
+        return users.findByLoginAndPassword(login, password);
+    }
+
     @PostMapping
     public User addUser(@RequestBody User user) {
         return users.save(user);
@@ -45,7 +50,6 @@ public class UserController {
             user.setEmail(userRequest.getEmail());
             user.setLogin(userRequest.getLogin());
             user.setPassword(userRequest.getPassword());
-            user.setSalt(userRequest.getSalt());
             return users.save(user);
         }).orElseThrow(() -> new RuntimeException("UserId " + id + " not found."));
     }

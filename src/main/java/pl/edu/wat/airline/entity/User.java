@@ -21,14 +21,13 @@ public class User {
     private String email;
     private String login;
     private String password;
-    private String salt;
     private LocalDate birthdate;
     private Boolean isAdmin;
 
     public User() {
     }
 
-    public User(String name, String surname, LocalDate birthdate, String phoneNumber, String email, String login, String password, String salt) {
+    public User(String name, String surname, LocalDate birthdate, String phoneNumber, String email, String login, String password) {
         this.name = name;
         this.surname = surname;
         this.birthdate = birthdate;
@@ -36,7 +35,18 @@ public class User {
         this.email = email;
         this.login = login;
         this.password = password;
-        this.salt = salt;
+        this.isAdmin = false;
+    }
+
+    public User(Long id, String name, String surname, LocalDate birthdate, String phoneNumber, String email, String login, String password) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.birthdate = birthdate;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.login = login;
+        this.password = password;
         this.isAdmin = false;
     }
 }

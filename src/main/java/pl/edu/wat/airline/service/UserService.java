@@ -20,12 +20,16 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
+    public Iterable<User> findAll() {
+        return userRepo.findAll();
+    }
+
     public Optional<User> findById(Long id) {
         return userRepo.findById(id);
     }
 
-    public Iterable<User> findAll() {
-        return userRepo.findAll();
+    public Optional<User> findByLoginAndPassword(String login, String password){
+        return userRepo.findByLoginAndPassword(login, password);
     }
 
     public User save(User user) {
@@ -38,7 +42,8 @@ public class UserService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() {
-        save(new User("Szymon","Bocian", LocalDate.of(1994,3,10),"+48 601 699 730","szymon.bocian@student.wat.edu.pl","SzymonBocian","Szymon","1234"));
-        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","JakubKapusta","Jakub","4321"));
+        save(new User("Szymon","Bocian", LocalDate.of(1994,3,10),"+48 601 699 730","szymon.bocian@student.wat.edu.pl","SzymonBocian","Szymon"));
+        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","JakubKapusta","Jakub"));
+        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","jakubk","jk"));
     }
 }
