@@ -16,4 +16,6 @@ public interface UserRepo extends CrudRepository<User, Long> {
                     "WHERE u.login = :login AND u.password = :password"
     )
     Optional<User> findByLoginAndPassword(@Param("login") String login, @Param("password") String password);
+
+    User findByLogin(String name);
 }

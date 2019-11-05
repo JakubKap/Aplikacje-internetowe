@@ -33,7 +33,12 @@ public class UserService {
     }
 
     public User save(User user) {
-        return userRepo.save(user);
+        if(userRepo.findByLogin(user.getLogin()) == null) {
+            return userRepo.save(user);
+        }
+        else {
+            return null;
+        }
     }
 
     public void deleteById(Long id) {
@@ -42,8 +47,8 @@ public class UserService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() {
-        save(new User("Szymon","Bocian", LocalDate.of(1994,3,10),"+48 601 699 730","szymon.bocian@student.wat.edu.pl","SzymonBocian","Szymon"));
-        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","JakubKapusta","Jakub"));
-        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","jakubk","jk"));
+        save(new User("Szymon","Bocian", LocalDate.of(1994,3,10),"+48 601 699 730","szymon.bocian@student.wat.edu.pl","SzymonBocian2","Szymon"));
+        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","JakubKapusta2","Jakub"));
+        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","jakubk2","jk"));
     }
 }
