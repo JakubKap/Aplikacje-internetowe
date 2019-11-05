@@ -22,7 +22,6 @@ public class User {
     private String login;
     private String password;
     private LocalDate birthdate;
-    private Boolean isAdmin;
 
     public User() {
     }
@@ -35,7 +34,6 @@ public class User {
         this.email = email;
         this.login = login;
         this.password = password;
-        this.isAdmin = false;
     }
 
     public User(Long id, String name, String surname, LocalDate birthdate, String phoneNumber, String email, String login, String password) {
@@ -47,6 +45,5 @@ public class User {
         this.email = email;
         this.login = login;
         this.password = password;
-        this.isAdmin = false;
     }
 }

@@ -50,7 +50,6 @@ public class UserController {
             user.setEmail(userRequest.getEmail());
             user.setLogin(userRequest.getLogin());
             user.setPassword(userRequest.getPassword());
-            user.setIsAdmin(userRequest.getIsAdmin());
             return users.save(user);
         }).orElseThrow(() -> new RuntimeException("UserId " + id + " not found."));
     }
