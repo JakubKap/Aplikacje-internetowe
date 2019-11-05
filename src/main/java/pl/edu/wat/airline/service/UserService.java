@@ -32,8 +32,11 @@ public class UserService {
         return userRepo.findByLoginAndPassword(login, password);
     }
 
-    public User save(User user) {
-        if(userRepo.findByLogin(user.getLogin()) == null) {
+    public User save(User user, Long id) {
+        User foundUser = userRepo.findByLogin(user.getLogin());
+
+        if(foundUser == null || foundUser.getId().equals(id)
+        || (foundUser != null && foundUser.getId().equals(id))) {
             return userRepo.save(user);
         }
         else {
@@ -47,8 +50,8 @@ public class UserService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() {
-        save(new User("Szymon","Bocian", LocalDate.of(1994,3,10),"+48 601 699 730","szymon.bocian@student.wat.edu.pl","SzymonBocian2","Szymon"));
-        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","JakubKapusta2","Jakub"));
-        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","jakubk2","jk"));
+        save(new User("Szymon","Bocian", LocalDate.of(1994,3,10),"+48 601 699 730","szymon.bocian@student.wat.edu.pl","SzymonBocian2","Szymon"), null);
+        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","JakubKapusta2","Jakub"),null);
+        save(new User("Jakub","Kapusta", LocalDate.of(1996,1,1),"+48 601 601 601","jakub.kapusta@student.wat.edu.pl","jakubk2","jk"), null);
     }
 }

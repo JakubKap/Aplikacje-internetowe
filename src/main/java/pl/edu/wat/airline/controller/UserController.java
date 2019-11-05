@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping
     public User addUser(@RequestBody User user) {
-        return users.save(user);
+        return users.save(user, null);
     }
 
     @PutMapping
@@ -50,7 +50,7 @@ public class UserController {
             user.setEmail(userRequest.getEmail());
             user.setLogin(userRequest.getLogin());
             user.setPassword(userRequest.getPassword());
-            return users.save(user);
+            return users.save(user, id);
         }).orElseThrow(() -> new RuntimeException("UserId " + id + " not found."));
     }
 
