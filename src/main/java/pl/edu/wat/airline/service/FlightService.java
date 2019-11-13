@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.wat.airline.entity.Flight;
 import pl.edu.wat.airline.repository.FlightRepo;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -23,6 +24,10 @@ public class FlightService {
 
     public Iterable<Flight> findAll() {
         return flightRepo.findAll();
+    }
+
+    public Flight findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(String flightNumber, LocalDateTime departureDatetime){
+        return flightRepo.findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(flightNumber, departureDatetime);
     }
 
     public Flight save(Flight flight) {

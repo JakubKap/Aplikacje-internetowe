@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.entity.Flight;
 import pl.edu.wat.airline.service.FlightService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +29,12 @@ public class FlightController {
     @GetMapping
     public Optional<Flight> getById(@RequestParam Long id){
         return flights.findById(id);
+    }
+
+    @GetMapping("flightStatus")
+    public Flight findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(@RequestParam String flightNumber,  @RequestParam String departureDatetime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return flights.findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(flightNumber, LocalDateTime.parse(departureDatetime, formatter));
     }
 
     @PostMapping
