@@ -7,6 +7,7 @@ import pl.edu.wat.airline.entity.Reservation;
 import pl.edu.wat.airline.entity.User;
 import pl.edu.wat.airline.service.ReservationService;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,11 @@ public class ReservationController {
     @GetMapping("/user_reservation")
     public List<Reservation> findByUserId(@RequestParam Long userId){
         return reservations.findByUserId(userId);
+    }
+
+    @GetMapping("/reservation")
+    public Optional<Reservation> getByReservationNo(@RequestParam String reservationNo){
+        return reservations.findByReservationNo(reservationNo);
     }
 
     @PostMapping

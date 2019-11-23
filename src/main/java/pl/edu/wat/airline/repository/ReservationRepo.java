@@ -7,6 +7,7 @@ import pl.edu.wat.airline.entity.Reservation;
 import pl.edu.wat.airline.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservationRepo extends CrudRepository<Reservation, Long> {
     @Query("SELECT new pl.edu.wat.airline.entity.Reservation(r.id, r.reservationNo, r.isReservationPaid, r.isOnlineCheckInMade, r.numOfAdults, r.numOfInfants, r.numOfChildren, r.travelClass, r.reservationPrice, r.flight, r.user) " +
@@ -14,5 +15,7 @@ public interface ReservationRepo extends CrudRepository<Reservation, Long> {
             "WHERE r.user.id = :userId"
     )
     List<Reservation> findByUserId(@Param("userId") Long userId);
+
+    Optional<Reservation> findByReservationNo(@Param("reservationNo") String reservationNo);
 }
 

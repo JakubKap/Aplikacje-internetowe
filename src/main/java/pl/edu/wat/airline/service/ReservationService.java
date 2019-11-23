@@ -28,6 +28,10 @@ public class ReservationService {
         return reservationRepo.findByUserId(userId);
     }
 
+    public Optional<Reservation> findByReservationNo(String reservationNo){
+        return reservationRepo.findByReservationNo(reservationNo);
+    }
+
     public Iterable<Reservation> findAll() {
         return reservationRepo.findAll();
     }
