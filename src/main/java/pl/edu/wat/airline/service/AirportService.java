@@ -36,12 +36,12 @@ public class AirportService {
         airportRepo.deleteById(id);
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void fillDB() {
-        save(new Airport("WAW","Lotnisko Chopina w Warszawie"));
-        save(new Airport("TXL","Port lotniczy Berlin-Tegel"));
-        save(new Airport("BCN","Port lotniczy Barcelona El Prat"));
-        save(new Airport("VLC", "Port lotniczy Walencja"));
-        save(new Airport("LHR","Port lotniczy Londyn-Heathrow"));
-    }
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void fillDB() {
+//        save(new Airport("WAW","Lotnisko Chopina w Warszawie"));
+//        save(new Airport("TXL","Port lotniczy Berlin-Tegel"));
+//        save(new Airport("BCN","Port lotniczy Barcelona El Prat"));
+//        save(new Airport("VLC", "Port lotniczy Walencja"));
+//        save(new Airport("LHR","Port lotniczy Londyn-Heathrow"));
+//    }
 }
