@@ -1,32 +1,41 @@
 package pl.edu.wat.airline.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "available_seats")
 public class AvailableSits {
 
     @Id
-    private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime departureDateTime;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime arrivalDateTime;
+    private Long flightId;
+
+    private Integer airplaneId;
+    private Integer seatClassId;
+    private Integer departureId;
+    private Integer arrivalId;
+    private String departureDateTime;
+//    private String arrivalDateTime;
     private String departureAirport;
     private String arrivalAirport;
     private Integer ekoAvailable;
     private Integer busAvailable;
     private Integer pierAvailable;
-
+    private Double businessClassAdultPrice;
+    private Double businessClassChildPrice;
+    private Double businessClassInfantPrice;
+    private Double economicClassAdultPrice;
+    private Double economicClassChildPrice;
+    private Double economicClassInfantPrice;
+    private Double firstClassAdultPrice;
+    private Double firstClassChildPrice;
+    private Double firstClassInfantPrice;
 }

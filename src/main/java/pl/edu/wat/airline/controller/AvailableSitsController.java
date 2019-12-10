@@ -34,23 +34,43 @@ public class AvailableSitsController {
     }
 
     @GetMapping("available")
-    public AvailableSits findByDepartureDateTimeAndArrivalDateTimeAndDepartureAirportAndArrivalAirportAndEkoAvailableIsGreaterThanEqualAndBusAvailableIsGreaterThanEqualAndPierAvailableIsGreaterThanEqual(
+    public Iterable<AvailableSits> findAvailableSits(
             @RequestParam String departureDateTime,
-            @RequestParam String arrivalDateTime,
+//            @RequestParam String arrivalDateTime,
             @RequestParam String departureAirport,
             @RequestParam String arrivalAirport,
-            @RequestParam Integer eko,
-            @RequestParam Integer bus,
-            @RequestParam Integer pier
+            @RequestParam Integer ekoSeats,
+            @RequestParam Integer busSeats,
+            @RequestParam Integer pierSeats
     ) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return availableSits.findByDepartureDateTimeAndArrivalDateTimeAndDepartureAirportAndArrivalAirportAndEkoAvailableIsGreaterThanEqualAndBusAvailableIsGreaterThanEqualAndPierAvailableIsGreaterThanEqual(
-                LocalDateTime.parse(departureDateTime, formatter),
-                LocalDateTime.parse(arrivalDateTime, formatter),
+        return availableSits.findAvailableSits(
+                departureDateTime,
+//                arrivalDateTime,
                 departureAirport,
                 arrivalAirport,
-                eko, bus, pier
-        );
+                ekoSeats,
+                busSeats,
+                pierSeats);
     }
+
+    //    @GetMapping("available")
+//    public AvailableSits findByDepartureDateTimeAndArrivalDateTimeAndDepartureAirportAndArrivalAirportAndEkoAvailableIsGreaterThanEqualAndBusAvailableIsGreaterThanEqualAndPierAvailableIsGreaterThanEqual(
+//            @RequestParam String departureDateTime,
+//            @RequestParam String arrivalDateTime,
+//            @RequestParam String departureAirport,
+//            @RequestParam String arrivalAirport,
+//            @RequestParam Integer eko,
+//            @RequestParam Integer bus,
+//            @RequestParam Integer pier
+//    ) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        return availableSits.findByDepartureDateTimeAndArrivalDateTimeAndDepartureAirportAndArrivalAirportAndEkoAvailableIsGreaterThanEqualAndBusAvailableIsGreaterThanEqualAndPierAvailableIsGreaterThanEqual(
+//                LocalDateTime.parse(departureDateTime, formatter),
+//                LocalDateTime.parse(arrivalDateTime, formatter),
+//                departureAirport,
+//                arrivalAirport,
+//                eko, bus, pier
+//        );
+//    }
 
 }

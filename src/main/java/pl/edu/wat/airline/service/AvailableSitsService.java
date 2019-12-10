@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.edu.wat.airline.entity.AvailableSits;
 import pl.edu.wat.airline.repository.AvailableSitsRepo;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -26,19 +25,26 @@ public class AvailableSitsService {
         return availableSitsRepo.findAll();
     }
 
-    public AvailableSits findByDepartureDateTimeAndArrivalDateTimeAndDepartureAirportAndArrivalAirportAndEkoAvailableIsGreaterThanEqualAndBusAvailableIsGreaterThanEqualAndPierAvailableIsGreaterThanEqual(
-            LocalDateTime departureDateTime,
-            LocalDateTime arrivalDateTime,
+    public Iterable<AvailableSits> findAvailableSits(
+            String departureDateTime,
+//            String arrivalDateTime,
             String departureAirport,
             String arrivalAirport,
-            Integer eko,
-            Integer bus,
-            Integer pier
+            Integer busSeats,
+            Integer ekoSeats,
+            Integer pierSeats
     ) {
-        return availableSitsRepo.findByDepartureDateTimeAndArrivalDateTimeAndDepartureAirportAndArrivalAirportAndEkoAvailableIsGreaterThanEqualAndBusAvailableIsGreaterThanEqualAndPierAvailableIsGreaterThanEqual(
-                departureDateTime, arrivalDateTime, departureAirport, arrivalAirport, eko, bus, pier
-        );
+        return availableSitsRepo.findAvailableSits(
+                departureDateTime,
+//                arrivalDateTime,
+                departureAirport,
+                arrivalAirport,
+                busSeats,
+                ekoSeats,
+                pierSeats);
     }
+
+
 
     public AvailableSits save(AvailableSits as) {
         return availableSitsRepo.save(as);
@@ -47,4 +53,19 @@ public class AvailableSitsService {
     public void deleteById(Long id) {
         availableSitsRepo.deleteById(id);
     }
+
+    //    public AvailableSits findByDepartureDateTimeAndArrivalDateTimeAndDepartureAirportAndArrivalAirportAndEkoAvailableIsGreaterThanEqualAndBusAvailableIsGreaterThanEqualAndPierAvailableIsGreaterThanEqual(
+//            LocalDateTime departureDateTime,
+//            LocalDateTime arrivalDateTime,
+//            String departureAirport,
+//            String arrivalAirport,
+//            Integer eko,
+//            Integer bus,
+//            Integer pier
+//    ) {
+//        return availableSitsRepo.findByDepartureDateTimeAndArrivalDateTimeAndDepartureAirportAndArrivalAirportAndEkoAvailableIsGreaterThanEqualAndBusAvailableIsGreaterThanEqualAndPierAvailableIsGreaterThanEqual(
+//                departureDateTime, arrivalDateTime, departureAirport, arrivalAirport, eko, bus, pier
+//        );
+//    }
+
 }
