@@ -26,7 +26,7 @@ public class FlightController {
         return flights.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/flight")
     public Optional<Flight> getById(@RequestParam Long id){
         return flights.findById(id);
     }
