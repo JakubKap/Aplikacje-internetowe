@@ -8,11 +8,17 @@
 		<version>2.2.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>pl.edu.wat</groupId>
-	<artifactId>airline</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>airline</name>
-	<description>Demo project for Spring Boot</description>
+<!--	<groupId>pl.edu.wat</groupId>-->
+<!--	<artifactId>airline</artifactId>-->
+<!--	<version>0.0.1-SNAPSHOT</version>-->
+<!--	<name>airline</name>-->
+<!--	<description>Demo project for Spring Boot</description>-->
+
+	<artifactId>spring-boot-send-email</artifactId>
+	<packaging>jar</packaging>
+	<name>Spring Boot Send Email</name>
+	<url>https://www.mkyong.com</url>
+	<version>1.0</version>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -27,7 +33,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>

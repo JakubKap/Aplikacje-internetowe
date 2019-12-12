@@ -2,8 +2,10 @@ package pl.edu.wat.airline.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.entity.User;
+import pl.edu.wat.airline.service.EmailService;
 import pl.edu.wat.airline.service.UserService;
 
 import java.util.Optional;
@@ -14,11 +16,15 @@ import java.util.Optional;
 public class UserController {
 
     private UserService users;
+    private EmailService email;
 
     @Autowired
-    public UserController(UserService users) {
+    public UserController(UserService users, EmailService email)
+    {
         this.users = users;
+        this.email = email;
     }
+
 
     @GetMapping("all_users")
     public Iterable<User> getAllUsers(){
@@ -37,6 +43,11 @@ public class UserController {
 
     @PostMapping
     public User addUser(@RequestBody User user) {
+        try {
+            email.sendEmail(user.getEmail(),"AirportApp new member", "Faithfully AirportApp team");
+        } catch (MailAuthenticationException e) {
+            System.out.println("Wrong user email address");
+        }
         return users.save(user, null);
     }
 
