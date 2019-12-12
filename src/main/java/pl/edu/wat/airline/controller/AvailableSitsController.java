@@ -36,7 +36,6 @@ public class AvailableSitsController {
     @GetMapping("available")
     public Iterable<AvailableSits> findAvailableSits(
             @RequestParam String departureDateTime,
-//            @RequestParam String arrivalDateTime,
             @RequestParam String departureAirport,
             @RequestParam String arrivalAirport,
             @RequestParam Integer ekoSeats,
@@ -45,7 +44,6 @@ public class AvailableSitsController {
     ) {
         return availableSits.findAvailableSits(
                 departureDateTime,
-//                arrivalDateTime,
                 departureAirport,
                 arrivalAirport,
                 ekoSeats,
@@ -53,6 +51,47 @@ public class AvailableSitsController {
                 pierSeats);
     }
 
+    @GetMapping("bus_sits")
+    public Iterable<AvailableSits> findAvailableBusSits(
+            @RequestParam String departureDateTime,
+            @RequestParam String departureAirport,
+            @RequestParam String arrivalAirport,
+            @RequestParam Integer classSeatsNum
+    ) {
+        return availableSits.findAvailableBusSits(
+                departureDateTime,
+                departureAirport,
+                arrivalAirport,
+                classSeatsNum);
+    }
+
+    @GetMapping("eko_sits")
+    public Iterable<AvailableSits> findAvailableEkoSits(
+            @RequestParam String departureDateTime,
+            @RequestParam String departureAirport,
+            @RequestParam String arrivalAirport,
+            @RequestParam Integer classSeatsNum
+    ) {
+        return availableSits.findAvailableEkoSits(
+                departureDateTime,
+                departureAirport,
+                arrivalAirport,
+                classSeatsNum);
+    }
+
+    @GetMapping("pier_sits")
+    public Iterable<AvailableSits> findAvailablePierSits(
+            @RequestParam String departureDateTime,
+            @RequestParam String departureAirport,
+            @RequestParam String arrivalAirport,
+            @RequestParam Integer classSeatsNum
+    ) {
+        return availableSits.findAvailablePierSits(
+                departureDateTime,
+                departureAirport,
+                arrivalAirport,
+                classSeatsNum);
+    }
     //    @GetMapping("available")
 //    public AvailableSits findByDepartureDateTimeAndArrivalDateTimeAndDepartureAirportAndArrivalAirportAndEkoAvailableIsGreaterThanEqualAndBusAvailableIsGreaterThanEqualAndPierAvailableIsGreaterThanEqual(
 //            @RequestParam String departureDateTime,

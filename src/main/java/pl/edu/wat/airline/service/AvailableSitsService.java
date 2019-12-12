@@ -27,7 +27,6 @@ public class AvailableSitsService {
 
     public Iterable<AvailableSits> findAvailableSits(
             String departureDateTime,
-//            String arrivalDateTime,
             String departureAirport,
             String arrivalAirport,
             Integer busSeats,
@@ -36,7 +35,6 @@ public class AvailableSitsService {
     ) {
         return availableSitsRepo.findAvailableSits(
                 departureDateTime,
-//                arrivalDateTime,
                 departureAirport,
                 arrivalAirport,
                 busSeats,
@@ -44,7 +42,44 @@ public class AvailableSitsService {
                 pierSeats);
     }
 
+    public Iterable<AvailableSits> findAvailableBusSits(
+            String departureDateTime,
+            String departureAirport,
+            String arrivalAirport,
+            Integer classSeatsNum
+    ) {
+        return availableSitsRepo.findAvailableBusSits(
+                departureDateTime,
+                departureAirport,
+                arrivalAirport,
+                classSeatsNum);
+    }
 
+    public Iterable<AvailableSits> findAvailableEkoSits(
+            String departureDateTime,
+            String departureAirport,
+            String arrivalAirport,
+            Integer classSeatsNum
+    ) {
+        return availableSitsRepo.findAvailableEkoSits(
+                departureDateTime,
+                departureAirport,
+                arrivalAirport,
+                classSeatsNum);
+    }
+
+    public Iterable<AvailableSits> findAvailablePierSits(
+            String departureDateTime,
+            String departureAirport,
+            String arrivalAirport,
+            Integer classSeatsNum
+    ) {
+        return availableSitsRepo.findAvailablePierSits(
+                departureDateTime,
+                departureAirport,
+                arrivalAirport,
+                classSeatsNum);
+    }
 
     public AvailableSits save(AvailableSits as) {
         return availableSitsRepo.save(as);

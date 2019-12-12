@@ -23,7 +23,6 @@ public class AvailableSits {
     private Integer departureId;
     private Integer arrivalId;
     private String departureDateTime;
-//    private String arrivalDateTime;
     private String departureAirport;
     private String arrivalAirport;
     private Integer ekoAvailable;
