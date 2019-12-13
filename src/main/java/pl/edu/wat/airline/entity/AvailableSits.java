@@ -22,7 +22,11 @@ public class AvailableSits {
     private Integer seatClassId;
     private Integer departureId;
     private Integer arrivalId;
+    private String flightNumber;
+    private String gateNumber;
     private String departureDateTime;
+    private String arrivalDateTime;
+    private String boardingDateTime;
     private String departureAirport;
     private String arrivalAirport;
     private Integer ekoAvailable;
@@ -37,4 +41,6 @@ public class AvailableSits {
     private Double firstClassAdultPrice;
     private Double firstClassChildPrice;
     private Double firstClassInfantPrice;
+    private Double price;
 }
+

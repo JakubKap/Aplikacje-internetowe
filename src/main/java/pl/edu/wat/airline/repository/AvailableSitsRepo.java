@@ -13,12 +13,13 @@ public interface AvailableSitsRepo extends CrudRepository<AvailableSits, Long> {
     @Query(
             "SELECT new pl.edu.wat.airline.entity.AvailableSits(" +
                     "flightId, airplaneId, seatClassId, departureId, arrivalId, " +
-                    "departureDateTime, " +
+                    "flightNumber, gateNumber, " +
+                    "departureDateTime, arrivalDateTime, boardingDateTime, " +
                     "departureAirport, arrivalAirport, " +
                     "busAvailable, ekoAvailable, pierAvailable, " +
                     "businessClassAdultPrice, businessClassChildPrice, businessClassInfantPrice, " +
                     "economicClassAdultPrice, economicClassChildPrice, economicClassInfantPrice," +
-                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice) " +
+                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice, price) " +
                     "FROM AvailableSits " +
                     "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(departureDateTime,1,10),'%')" +
                     "AND departureAirport = :departureAirport " +
@@ -38,7 +39,8 @@ public interface AvailableSitsRepo extends CrudRepository<AvailableSits, Long> {
     @Query(
             "SELECT new pl.edu.wat.airline.entity.AvailableSits(" +
                     "flightId, airplaneId, seatClassId, departureId, arrivalId, " +
-                    "departureDateTime, " +
+                    "flightNumber, gateNumber, " +
+                    "departureDateTime,  arrivalDateTime, boardingDateTime, " +
                     "departureAirport, arrivalAirport, " +
                     "busAvailable, ekoAvailable, pierAvailable, " +
 //                    "CASE " +
@@ -48,7 +50,7 @@ public interface AvailableSitsRepo extends CrudRepository<AvailableSits, Long> {
 //                    "ELSE 0 END, " +
                     "businessClassAdultPrice, businessClassChildPrice, businessClassInfantPrice, " +
                     "economicClassAdultPrice, economicClassChildPrice, economicClassInfantPrice," +
-                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice) " +
+                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice, price) " +
                     "FROM AvailableSits " +
                     "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(departureDateTime,1,10),'%')" +
                     "AND departureAirport = :departureAirport " +
@@ -70,12 +72,13 @@ public interface AvailableSitsRepo extends CrudRepository<AvailableSits, Long> {
     @Query(
             "SELECT new pl.edu.wat.airline.entity.AvailableSits(" +
                     "flightId, airplaneId, seatClassId, departureId, arrivalId, " +
-                    "departureDateTime, " +
+                    "flightNumber, gateNumber, " +
+                    "departureDateTime,  arrivalDateTime, boardingDateTime, " +
                     "departureAirport, arrivalAirport, " +
                     "busAvailable, ekoAvailable, pierAvailable, " +
                     "businessClassAdultPrice, businessClassChildPrice, businessClassInfantPrice, " +
                     "economicClassAdultPrice, economicClassChildPrice, economicClassInfantPrice," +
-                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice) " +
+                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice, price) " +
                     "FROM AvailableSits " +
                     "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(departureDateTime,1,10),'%')" +
                     "AND departureAirport = :departureAirport " +
@@ -91,12 +94,13 @@ public interface AvailableSitsRepo extends CrudRepository<AvailableSits, Long> {
     @Query(
             "SELECT new pl.edu.wat.airline.entity.AvailableSits(" +
                     "flightId, airplaneId, seatClassId, departureId, arrivalId, " +
-                    "departureDateTime, " +
+                    "flightNumber, gateNumber, " +
+                    "departureDateTime,  arrivalDateTime, boardingDateTime, " +
                     "departureAirport, arrivalAirport, " +
                     "busAvailable, ekoAvailable, pierAvailable, " +
                     "businessClassAdultPrice, businessClassChildPrice, businessClassInfantPrice, " +
                     "economicClassAdultPrice, economicClassChildPrice, economicClassInfantPrice," +
-                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice) " +
+                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice, price) " +
                     "FROM AvailableSits " +
                     "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(departureDateTime,1,10),'%')" +
                     "AND departureAirport = :departureAirport " +
