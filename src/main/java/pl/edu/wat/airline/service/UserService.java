@@ -5,6 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.edu.wat.airline.entity.User;
+import pl.edu.wat.airline.entity.UserCreds;
 import pl.edu.wat.airline.repository.UserRepo;
 
 import java.time.LocalDate;
@@ -28,8 +29,8 @@ public class UserService {
         return userRepo.findById(id);
     }
 
-    public Optional<User> findByLoginAndPassword(String login, String password){
-        return userRepo.findByLoginAndPassword(login, password);
+    public Optional<User> findByLoginAndPassword(UserCreds userCreds){
+        return userRepo.findByLoginAndPassword(userCreds.getLogin(), userCreds.getPassword());
     }
 
     public User save(User user, Long id) {

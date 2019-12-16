@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.entity.User;
+import pl.edu.wat.airline.entity.UserCreds;
 import pl.edu.wat.airline.service.EmailService;
 import pl.edu.wat.airline.service.UserService;
 
@@ -36,9 +37,9 @@ public class UserController {
         return users.findById(id);
     }
 
-    @GetMapping("login")
-    public Optional<User> getByLoginAndPassword(@RequestParam String login, @RequestParam String password){
-        return users.findByLoginAndPassword(login, password);
+    @PostMapping("login")
+    public Optional<User> getByLoginAndPassword(@RequestBody UserCreds userCreds){
+        return users.findByLoginAndPassword(userCreds);
     }
 
     @PostMapping
