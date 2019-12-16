@@ -71,6 +71,14 @@ public class ReservationController {
         }).orElseThrow(() -> new RuntimeException("ReservationId " + id + " not found."));
     }
 
+    @PutMapping("/paid")
+    public Reservation updatePaidStatus(@RequestParam Long id) {
+        return reservations.findById(id).map(reservation -> {
+            reservation.setIsReservationPaid(true);
+            return reservations.save(reservation);
+        }).orElseThrow(() -> new RuntimeException("Cannot pay for reservationId " + id + "."));
+    }
+
     @DeleteMapping
     public ResponseEntity<?> deleteReservation(@RequestParam Long id){
         return reservations.findById(id).map(reservation -> {
