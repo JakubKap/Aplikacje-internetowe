@@ -47,7 +47,9 @@ public class ReservationController {
     @PostMapping
     public Reservation addReservation(@RequestBody Reservation reservation){
         try {
-            email.sendEmail(reservation.getUser().getEmail(),"AirportApp new reservation: " + reservation.getReservationNo(), "Faithfully AirportApp team");
+            email.sendEmail(reservation.getUser().getEmail(),"AirportApp new reservation: " + reservation.getReservationNo(), "You successfully added new reservation with number " + reservation.getReservationNo()
+            +". Reservation is waiting for payment - check your basket."
+            );
         } catch (MailAuthenticationException e) {
             System.out.println("Wrong user email address");
         }

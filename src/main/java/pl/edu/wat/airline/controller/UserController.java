@@ -45,7 +45,7 @@ public class UserController {
     @PostMapping
     public User addUser(@RequestBody User user) {
         try {
-            email.sendEmail(user.getEmail(),"AirportApp new member", "Faithfully AirportApp team");
+            email.sendEmail(user.getEmail(),"AirportApp new member", "Your reservation finished with succcess. Please, log in to AirportApp using your account.");
         } catch (MailAuthenticationException e) {
             System.out.println("Wrong user email address");
         }
