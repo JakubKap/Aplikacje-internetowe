@@ -37,9 +37,9 @@ public class AirplaneService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() {
-        save(new Airplane("Airbus A320",100,40,40));
-        save(new Airplane("Airbus A380",120,30,70));
-        save(new Airplane("Airbus A310",100,10,10));
-        save(new Airplane("Airbus A318",160,25,25));
+//        save(new Airplane("Airbus A320",100,40,40));
+//        save(new Airplane("Airbus A380",120,30,70));
+//        save(new Airplane("Airbus A310",100,10,10));
+//        save(new Airplane("Airbus A318",160,25,25));
     }
 }

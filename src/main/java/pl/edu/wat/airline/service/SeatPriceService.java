@@ -35,11 +35,11 @@ public class SeatPriceService {
         seatPriceRepo.deleteById(id);
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void fillDB() {
-        save(new SeatPrice(100.00,200.00,300.00,30.00,20.00,0.00,50.00,100.00,150.00));
-        save(new SeatPrice(200.00,300.00,400.00,40.00,30.00,20.00,100.00,150.00,200.00));
-        save(new SeatPrice(2.50,2.30,6.50,66.50,80.50,66.00,55.00,221.00,1.00));
-        save(new SeatPrice(2.50,2.80,6.50,66.50,80.50,66.00,55.00,221.00,1.00));
-    }
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void fillDB() {
+//        save(new SeatPrice(100.00,200.00,300.00,30.00,20.00,0.00,50.00,100.00,150.00));
+//        save(new SeatPrice(200.00,300.00,400.00,40.00,30.00,20.00,100.00,150.00,200.00));
+//        save(new SeatPrice(2.50,2.30,6.50,66.50,80.50,66.00,55.00,221.00,1.00));
+//        save(new SeatPrice(2.50,2.80,6.50,66.50,80.50,66.00,55.00,221.00,1.00));
+//    }
 }
