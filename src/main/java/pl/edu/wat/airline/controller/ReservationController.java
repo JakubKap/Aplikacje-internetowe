@@ -46,14 +46,18 @@ public class ReservationController {
 
     @PostMapping
     public Reservation addReservation(@RequestBody Reservation reservation){
+        return reservations.save(reservation);
+    }
+
+    @GetMapping("mailAboutReservation")
+    public void sendMailAboutReservation(@RequestParam String userEmail, @RequestParam String reservationNo) {
         try {
-            email.sendEmail(reservation.getUser().getEmail(),"AirportApp new reservation: " + reservation.getReservationNo(), "You successfully added new reservation with number " + reservation.getReservationNo()
-            +". Reservation is waiting for payment - check your basket."
+            email.sendEmail(userEmail,"AirportApp new reservation: " + reservationNo, "You successfully added new reservation with number " + reservationNo
+                    +". Reservation is waiting for payment - check your basket."
             );
         } catch (MailAuthenticationException e) {
             System.out.println("Wrong user email address");
         }
-        return reservations.save(reservation);
     }
 
     @PutMapping
