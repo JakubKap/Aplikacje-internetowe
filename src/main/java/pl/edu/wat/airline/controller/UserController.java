@@ -44,12 +44,16 @@ public class UserController {
 
     @PostMapping
     public User addUser(@RequestBody User user) {
+        return users.save(user, null);
+    }
+
+    @GetMapping("mailToNewUser")
+    public void sendMailToNewUser(@RequestParam String userEmail) {
         try {
-            email.sendEmail(user.getEmail(),"AirportApp new member", "Your reservation finished with succcess. Please, log in to AirportApp using your account.");
+            email.sendEmail(userEmail,"AirportApp new member", "Your registration finished with succcess. Please, log in to AirportApp using your account.");
         } catch (MailAuthenticationException e) {
             System.out.println("Wrong user email address");
         }
-        return users.save(user, null);
     }
 
     @PutMapping
