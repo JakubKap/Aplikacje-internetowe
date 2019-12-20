@@ -35,8 +35,8 @@ public class ReservationController {
     }
 
     @GetMapping("/user_reservation")
-    public List<Reservation> findByUserId(@RequestParam Long userId){
-        return reservations.findByUserId(userId);
+    public List<Reservation> findByUserLogin(@RequestParam String userLogin){
+        return reservations.findByUserLogin(userLogin);
     }
 
     @GetMapping("/reservation")

@@ -11,9 +11,9 @@ import java.util.Optional;
 public interface ReservationRepo extends CrudRepository<Reservation, Long> {
     @Query("SELECT new pl.edu.wat.airline.entities.Reservation(r.id, r.reservationNo, r.isReservationPaid, r.isOnlineCheckInMade, r.numOfAdults, r.numOfInfants, r.numOfChildren, r.travelClass, r.reservationPrice, r.flight, r.userEntity) " +
             "FROM Reservation r " +
-            "WHERE r.userEntity.id = :userId"
+            "WHERE r.userEntity.login = :userLogin"
     )
-    List<Reservation> findByUserId(@Param("userId") Long userId);
+    List<Reservation> findByUserLogin(@Param("userLogin") String userLogin);
 
     Optional<Reservation> findByReservationNo(@Param("reservationNo") String reservationNo);
 }
