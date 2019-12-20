@@ -53,7 +53,7 @@ public class FlightController {
             flight.setStatus(flightRequest.getStatus());
             flight.setDepartureAirport(flightRequest.getDepartureAirport());
             flight.setArrivalAirport(flightRequest.getArrivalAirport());
-            flight.setAirplane(flightRequest.getAirplane());
+            flight.setAirplaneEntity(flightRequest.getAirplaneEntity());
             flight.setSeatPrice(flightRequest.getSeatPrice());
             return flights.save(flight);
         }).orElseThrow(() -> new RuntimeException("FlightId " + id + " not found."));

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @Table(name = "ai_airplane")
 
-public class Airplane {
+public class AirplaneEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +19,10 @@ public class Airplane {
     private Integer businessSeatsAmount;
     private Integer firstClassSeatsAmount;
 
-    public Airplane() {
+    public AirplaneEntity() {
     }
 
-    public Airplane(String name, Integer economicSeatsAmount, Integer businessSeatsAmount, Integer firstClassSeatsAmount) {
+    public AirplaneEntity(String name, Integer economicSeatsAmount, Integer businessSeatsAmount, Integer firstClassSeatsAmount) {
         this.name = name;
         this.economicSeatsAmount = economicSeatsAmount;
         this.businessSeatsAmount = businessSeatsAmount;
