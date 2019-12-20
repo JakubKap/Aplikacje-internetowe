@@ -72,7 +72,7 @@ public class ReservationController {
             reservation.setTravelClass(reservationRequest.getTravelClass());
             reservation.setReservationPrice(reservationRequest.getReservationPrice());
             reservation.setFlight(reservationRequest.getFlight());
-            reservation.setUser(reservationRequest.getUser());
+            reservation.setUserEntity(reservationRequest.getUserEntity());
             return reservations.save(reservation);
         }).orElseThrow(() -> new RuntimeException("ReservationId " + id + " not found."));
     }
@@ -96,7 +96,7 @@ public class ReservationController {
     @DeleteMapping("/user")
     public ResponseEntity<?> deleteUserReservation(@RequestBody Reservation reservation) {
         try {
-            email.sendEmail(reservation.getUser().getEmail(),"AirportApp reservation No. " + reservation.getReservationNo(), "Faithfully AirportApp team");
+            email.sendEmail(reservation.getUserEntity().getEmail(),"AirportApp reservation No. " + reservation.getReservationNo(), "Faithfully AirportApp team");
         } catch (MailAuthenticationException e) {
             System.out.println("Wrong user email address");
         }

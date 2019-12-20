@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Data
 @Table(name = "ai_user")
 
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +23,10 @@ public class User {
     private String password;
     private LocalDate birthdate;
 
-    public User() {
+    public UserEntity() {
     }
 
-    public User(String name, String surname, LocalDate birthdate, String phoneNumber, String email, String login, String password) {
+    public UserEntity(String name, String surname, LocalDate birthdate, String phoneNumber, String email, String login, String password) {
         this.name = name;
         this.surname = surname;
         this.birthdate = birthdate;
@@ -36,7 +36,7 @@ public class User {
         this.password = password;
     }
 
-    public User(Long id, String name, String surname, LocalDate birthdate, String phoneNumber, String email, String login, String password) {
+    public UserEntity(Long id, String name, String surname, LocalDate birthdate, String phoneNumber, String email, String login, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
