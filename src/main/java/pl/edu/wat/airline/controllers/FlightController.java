@@ -1,6 +1,8 @@
 package pl.edu.wat.airline.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.dtos.FlightDto;
 import pl.edu.wat.airline.services.FlightsServiceImpl;
@@ -20,29 +22,45 @@ public class FlightController {
     }
 
     @GetMapping("/all_flights")
-    public Iterable<FlightDto> getAllFlights() {
-        return flightsServiceImpl.findAll();
+    public ResponseEntity<Iterable<FlightDto>> getAllFlights() {
+        return new ResponseEntity<>(flightsServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/flight")
-    public FlightDto getByFlightNumber(@RequestParam String flightNumber){
-        return flightsServiceImpl.findByFlightNumber(flightNumber);
+    public ResponseEntity getByFlightNumber(@RequestParam String flightNumber){
+        FlightDto flightDto = flightsServiceImpl.findByFlightNumber(flightNumber);
+        if(flightDto == null){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(flightDto, HttpStatus.OK);
     }
 
     @GetMapping("flightStatus")
-    public FlightDto findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(@RequestParam String flightNumber, @RequestParam String departureDatetime){
+    public ResponseEntity findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(@RequestParam String flightNumber, @RequestParam String departureDatetime){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return flightsServiceImpl.findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(flightNumber, LocalDateTime.parse(departureDatetime, formatter));
+        FlightDto flightDto = flightsServiceImpl.findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(flightNumber, LocalDateTime.parse(departureDatetime, formatter));
+        if(flightDto == null){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(flightDto, HttpStatus.OK);
     }
 
     @PostMapping
-    public FlightDto addFLight(@RequestBody FlightDto flightDto){
-        return flightsServiceImpl.addFlight(flightDto);
+    public ResponseEntity addFLight(@RequestBody FlightDto flightDto){
+         FlightDto savedFlightDto = flightsServiceImpl.addFlight(flightDto);
+
+         if(savedFlightDto == null){
+             return new ResponseEntity(HttpStatus.NO_CONTENT);
+         }
+
+         return new ResponseEntity<>(savedFlightDto, HttpStatus.OK);
     }
 
     @PutMapping
-    public FlightDto updateFlight(@RequestBody FlightDto flightDto){
-        return flightsServiceImpl.updateFlight(flightDto);
+    public ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto){
+        return new ResponseEntity<>(flightsServiceImpl.updateFlight(flightDto), HttpStatus.OK);
     }
 
 }
