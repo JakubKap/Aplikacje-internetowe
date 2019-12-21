@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @Table(name = "ai_seat_price")
 
-public class SeatPrice {
+public class SeatPriceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +24,10 @@ public class SeatPrice {
     private Double businessClassChildPrice;
     private Double firstClassChildPrice;
 
-    public SeatPrice() {
+    public SeatPriceEntity() {
     }
 
-    public SeatPrice(Double economicClassAdultPrice, Double businessClassAdultPrice, Double firstClassAdultPrice, Double economicClassInfantPrice, Double businessClassInfantPrice, Double firstClassInfantPrice, Double economicClassChildPrice, Double businessClassChildPrice, Double firstClassChildPrice) {
+    public SeatPriceEntity(Double economicClassAdultPrice, Double businessClassAdultPrice, Double firstClassAdultPrice, Double economicClassInfantPrice, Double businessClassInfantPrice, Double firstClassInfantPrice, Double economicClassChildPrice, Double businessClassChildPrice, Double firstClassChildPrice) {
         this.economicClassAdultPrice = economicClassAdultPrice;
         this.businessClassAdultPrice = businessClassAdultPrice;
         this.firstClassAdultPrice = firstClassAdultPrice;

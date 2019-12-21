@@ -53,12 +53,12 @@ public class FlightEntity {
     @ManyToOne
     @JoinColumn(name = "seatPrice", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private SeatPrice seatPrice;
+    private SeatPriceEntity seatPriceEntity;
 
     public FlightEntity() {
     }
 
-    public FlightEntity(String flightNumber, LocalDateTime departureDate, LocalDateTime arrivalDate, LocalDateTime boardingDate, String gateNumber, String status, AirportEntity departureAirportEntity, AirportEntity arrivalAirportEntity, AirplaneEntity airplaneEntity, SeatPrice seatPrice) {
+    public FlightEntity(String flightNumber, LocalDateTime departureDate, LocalDateTime arrivalDate, LocalDateTime boardingDate, String gateNumber, String status, AirportEntity departureAirportEntity, AirportEntity arrivalAirportEntity, AirplaneEntity airplaneEntity, SeatPriceEntity seatPriceEntity) {
         this.flightNumber = flightNumber;
         this.departureDateTime = departureDate;
         this.arrivalDateTime = arrivalDate;
@@ -68,6 +68,6 @@ public class FlightEntity {
         this.departureAirportEntity = departureAirportEntity;
         this.arrivalAirportEntity = arrivalAirportEntity;
         this.airplaneEntity = airplaneEntity;
-        this.seatPrice = seatPrice;
+        this.seatPriceEntity = seatPriceEntity;
     }
 }

@@ -40,7 +40,7 @@ public class FlightsServiceImpl implements FlightsService {
                         flightDtos.add(new FlightDto(u.getFlightNumber(), u.getDepartureDateTime(), u.getArrivalDateTime(),
                                 u.getBoardingDateTime(), u.getGateNumber(), u.getStatus(),
                                 getDepAirportDtoFromFlightEntity(u), getArrAirportDtoFromFlightEntity(u), getAirplaneDtoFromFlightEntity(u),
-                                u.getSeatPrice())));
+                                u.getSeatPriceEntity())));
 
         return flightDtos;
     }
@@ -55,7 +55,7 @@ public class FlightsServiceImpl implements FlightsService {
         return new FlightDto(flightEntity.getFlightNumber(), flightEntity.getDepartureDateTime(), flightEntity.getArrivalDateTime(),
                 flightEntity.getBoardingDateTime(), flightEntity.getGateNumber(), flightEntity.getStatus(),
                 getDepAirportDtoFromFlightEntity(flightEntity), getArrAirportDtoFromFlightEntity(flightEntity), getAirplaneDtoFromFlightEntity(flightEntity),
-                flightEntity.getSeatPrice());
+                flightEntity.getSeatPriceEntity());
     }
 
     public FlightDto findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(String flightNumber, LocalDateTime departureDatetime){
@@ -70,7 +70,7 @@ public class FlightsServiceImpl implements FlightsService {
         return new FlightDto(flightEntity.getFlightNumber(), flightEntity.getDepartureDateTime(), flightEntity.getArrivalDateTime(),
                 flightEntity.getBoardingDateTime(), flightEntity.getGateNumber(), flightEntity.getStatus(),
                 getDepAirportDtoFromFlightEntity(flightEntity), getArrAirportDtoFromFlightEntity(flightEntity), getAirplaneDtoFromFlightEntity(flightEntity),
-                flightEntity.getSeatPrice());
+                flightEntity.getSeatPriceEntity());
     }
 
     public FlightDto addFlight(FlightDto flightDto) {
@@ -91,14 +91,14 @@ public class FlightsServiceImpl implements FlightsService {
 
         FlightEntity flightEntity = new FlightEntity(flightDto.getFlightNumber(), flightDto.getDepartureDateTime(), flightDto.getArrivalDateTime(),
                 flightDto.getBoardingDateTime(), flightDto.getGateNumber(), flightDto.getStatus(),
-                depAirportEntity, arrAirportEntity, airplaneEntity, flightDto.getSeatPrice());
+                depAirportEntity, arrAirportEntity, airplaneEntity, flightDto.getSeatPriceEntity());
 
         FlightEntity savedFlightEntity = flightsRepository.save(flightEntity);
 
         return new FlightDto(savedFlightEntity.getFlightNumber(), savedFlightEntity.getDepartureDateTime(), savedFlightEntity.getArrivalDateTime(),
                 savedFlightEntity.getBoardingDateTime(), savedFlightEntity.getGateNumber(), savedFlightEntity.getStatus(),
                 getDepAirportDtoFromFlightEntity(savedFlightEntity), getArrAirportDtoFromFlightEntity(savedFlightEntity), getAirplaneDtoFromFlightEntity(savedFlightEntity),
-                savedFlightEntity.getSeatPrice());
+                savedFlightEntity.getSeatPriceEntity());
     }
 
     public FlightDto updateFlight(FlightDto flightDto){
@@ -124,14 +124,14 @@ public class FlightsServiceImpl implements FlightsService {
             AirplaneEntity airplaneEntity = airplanesRepository.findByName(airplane.getName());
             flightEntity.setAirplaneEntity(airplaneEntity);
 
-            flightEntity.setSeatPrice(flightDto.getSeatPrice());
+            flightEntity.setSeatPriceEntity(flightDto.getSeatPriceEntity());
             return flightsRepository.save(flightEntity);
         }).orElseThrow(() -> new RuntimeException("FlightId " + flightEntityId + " not found."));
 
          return  new FlightDto(updatedFlightEntity.getFlightNumber(), updatedFlightEntity.getDepartureDateTime(), updatedFlightEntity.getArrivalDateTime(),
                  updatedFlightEntity.getBoardingDateTime(), updatedFlightEntity.getGateNumber(), updatedFlightEntity.getStatus(),
                  getDepAirportDtoFromFlightEntity(updatedFlightEntity), getArrAirportDtoFromFlightEntity(updatedFlightEntity), getAirplaneDtoFromFlightEntity(updatedFlightEntity),
-                 updatedFlightEntity.getSeatPrice());
+                 updatedFlightEntity.getSeatPriceEntity());
     }
 
     private AirportDto getDepAirportDtoFromFlightEntity(FlightEntity flightEntity){
