@@ -1,20 +1,19 @@
 package pl.edu.wat.airline.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.dtos.AirportDto;
-import pl.edu.wat.airline.services.AirportServiceImpl;
+import pl.edu.wat.airline.services.AirportsServiceImpl;
 
 @RestController
 @RequestMapping("/api/airports")
 
 public class AirportController {
 
-    private AirportServiceImpl airportService;
+    private AirportsServiceImpl airportService;
 
     @Autowired
-    public AirportController(AirportServiceImpl airportService) {
+    public AirportController(AirportsServiceImpl airportService) {
         this.airportService = airportService;
     }
 

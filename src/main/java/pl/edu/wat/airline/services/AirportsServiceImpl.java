@@ -5,18 +5,18 @@ import org.springframework.stereotype.Service;
 import pl.edu.wat.airline.dtos.AirportDto;
 import pl.edu.wat.airline.entities.AirportEntity;
 import pl.edu.wat.airline.repositories.AirportsRepository;
-import pl.edu.wat.airline.services.interfaces.AirportService;
+import pl.edu.wat.airline.services.interfaces.AirportsService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AirportServiceImpl implements AirportService {
+public class AirportsServiceImpl implements AirportsService {
 
     private AirportsRepository airportsRepository;
 
     @Autowired
-    public AirportServiceImpl(AirportsRepository airportsRepository) {
+    public AirportsServiceImpl(AirportsRepository airportsRepository) {
         this.airportsRepository = airportsRepository;
     }
 

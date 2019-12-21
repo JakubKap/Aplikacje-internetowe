@@ -3,7 +3,7 @@ package pl.edu.wat.airline.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.dtos.AirplaneDto;
-import pl.edu.wat.airline.services.AirplaneServiceImpl;
+import pl.edu.wat.airline.services.AirplanesServiceImpl;
 
 
 @RestController
@@ -11,10 +11,10 @@ import pl.edu.wat.airline.services.AirplaneServiceImpl;
 
 public class AirplaneController {
 
-    private AirplaneServiceImpl airplaneServiceImpl;
+    private AirplanesServiceImpl airplaneServiceImpl;
 
     @Autowired
-    public AirplaneController(AirplaneServiceImpl airplaneServiceImpl) {
+    public AirplaneController(AirplanesServiceImpl airplaneServiceImpl) {
         this.airplaneServiceImpl = airplaneServiceImpl;
     }
 

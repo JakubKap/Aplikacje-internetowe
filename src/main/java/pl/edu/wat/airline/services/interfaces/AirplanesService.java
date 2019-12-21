@@ -2,7 +2,7 @@ package pl.edu.wat.airline.services.interfaces;
 
 import pl.edu.wat.airline.dtos.AirplaneDto;
 
-public interface AirplaneService {
+public interface AirplanesService {
 
     Iterable<AirplaneDto> findAll();
 
