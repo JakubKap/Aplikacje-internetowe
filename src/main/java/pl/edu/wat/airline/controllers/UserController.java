@@ -1,10 +1,13 @@
 package pl.edu.wat.airline.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.dtos.UserCredsDto;
 import pl.edu.wat.airline.dtos.UserDto;
 import pl.edu.wat.airline.services.UsersServiceImpl;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -20,18 +23,28 @@ public class UserController {
     }
 
     @GetMapping("all_users")
-    public Iterable<UserDto> getAllUsers(){
-        return usersServiceImpl.findAll();
+    public ResponseEntity<Iterable<UserDto>> getAllUsers(){
+        return new ResponseEntity<>(usersServiceImpl.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("login")
-    public UserDto getByLoginAndPassword(@RequestBody UserCredsDto userCredsDto){
-        return usersServiceImpl.findByLoginAndPassword(userCredsDto);
+    public ResponseEntity getByLoginAndPassword(@RequestBody UserCredsDto userCredsDto){
+        UserDto userDto = usersServiceImpl.findByLoginAndPassword(userCredsDto);
+        if (userDto == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
     @PostMapping
-    public UserDto addUser(@RequestBody UserDto userDto) {
-        return usersServiceImpl.addUser(userDto);
+    public ResponseEntity addUser(@RequestBody UserDto userDto) {
+        UserDto savedUserDto = usersServiceImpl.addUser(userDto);
+        if (savedUserDto == null){
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(savedUserDto, HttpStatus.OK);
     }
 
     @GetMapping("mailToNewUser")
@@ -40,7 +53,7 @@ public class UserController {
     }
 
     @PutMapping
-    public UserDto updateUser(@RequestBody UserDto userDto) {
-        return usersServiceImpl.updateUser(userDto);
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+        return new ResponseEntity<>(usersServiceImpl.updateUser(userDto), HttpStatus.OK);
     }
 }
