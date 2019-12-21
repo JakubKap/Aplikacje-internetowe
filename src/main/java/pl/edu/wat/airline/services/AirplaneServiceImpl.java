@@ -7,12 +7,13 @@ import org.springframework.stereotype.Service;
 import pl.edu.wat.airline.dtos.AirplaneDto;
 import pl.edu.wat.airline.entities.AirplaneEntity;
 import pl.edu.wat.airline.repositories.AirplanesRepository;
+import pl.edu.wat.airline.services.interfaces.AirplaneService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AirplaneServiceImpl implements AirplaneService{
+public class AirplaneServiceImpl implements AirplaneService {
 
     private AirplanesRepository airplanesRepository;
 

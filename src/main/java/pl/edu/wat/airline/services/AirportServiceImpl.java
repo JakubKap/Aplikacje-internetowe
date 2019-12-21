@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 import pl.edu.wat.airline.dtos.AirportDto;
 import pl.edu.wat.airline.entities.AirportEntity;
 import pl.edu.wat.airline.repositories.AirportsRepository;
+import pl.edu.wat.airline.services.interfaces.AirportService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AirportServiceImpl implements AirportService{
+public class AirportServiceImpl implements AirportService {
 
     private AirportsRepository airportsRepository;
 

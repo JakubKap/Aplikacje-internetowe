@@ -1,4 +1,4 @@
-package pl.edu.wat.airline.services;
+package pl.edu.wat.airline.services.interfaces;
 
 import pl.edu.wat.airline.dtos.AirplaneDto;
 

@@ -1,6 +1,5 @@
 package pl.edu.wat.airline.services;
 
-import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.stereotype.Service;
@@ -8,13 +7,13 @@ import pl.edu.wat.airline.dtos.UserDto;
 import pl.edu.wat.airline.entities.UserEntity;
 import pl.edu.wat.airline.dtos.UserCredsDto;
 import pl.edu.wat.airline.repositories.UsersRepository;
+import pl.edu.wat.airline.services.interfaces.UsersService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class UsersServiceImpl implements UsersService{
+public class UsersServiceImpl implements UsersService {
 
     private UsersRepository usersRepository;
     private EmailService email;
