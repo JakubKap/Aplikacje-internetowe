@@ -9,21 +9,21 @@ import javax.persistence.*;
 @Data
 @Table(name = "ai_airport")
 
-public class Airport {
+public class AirportEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
     private String iata;
+    private String name;
 
-    public Airport() {
+    public AirportEntity() {
     }
 
-    public Airport(String name, String iata) {
-        this.name = name;
+    public AirportEntity(String iata, String name) {
         this.iata = iata;
+        this.name = name;
     }
 
     public Long getId() {

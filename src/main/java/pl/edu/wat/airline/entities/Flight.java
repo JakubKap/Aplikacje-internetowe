@@ -38,12 +38,12 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "departureAirportIata", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Airport departureAirport;
+    private AirportEntity departureAirportEntity;
 
     @ManyToOne
     @JoinColumn(name = "arrivalAirportIata", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Airport arrivalAirport;
+    private AirportEntity arrivalAirportEntity;
 
     @ManyToOne
     @JoinColumn(name = "airplaneId", nullable = false)
@@ -58,15 +58,15 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(String flightNumber, LocalDateTime departureDate, LocalDateTime arrivalDate, LocalDateTime boardingDate, String gateNumber, String status, Airport departureAirport, Airport arrivalAirport, AirplaneEntity airplaneEntity, SeatPrice seatPrice) {
+    public Flight(String flightNumber, LocalDateTime departureDate, LocalDateTime arrivalDate, LocalDateTime boardingDate, String gateNumber, String status, AirportEntity departureAirportEntity, AirportEntity arrivalAirportEntity, AirplaneEntity airplaneEntity, SeatPrice seatPrice) {
         this.flightNumber = flightNumber;
         this.departureDateTime = departureDate;
         this.arrivalDateTime = arrivalDate;
         this.boardingDateTime = boardingDate;
         this.gateNumber = gateNumber;
         this.status = status;
-        this.departureAirport = departureAirport;
-        this.arrivalAirport = arrivalAirport;
+        this.departureAirportEntity = departureAirportEntity;
+        this.arrivalAirportEntity = arrivalAirportEntity;
         this.airplaneEntity = airplaneEntity;
         this.seatPrice = seatPrice;
     }

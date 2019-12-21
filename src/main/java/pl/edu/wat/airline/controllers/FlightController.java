@@ -51,8 +51,8 @@ public class FlightController {
             flight.setBoardingDateTime(flightRequest.getBoardingDateTime());
             flight.setGateNumber(flightRequest.getGateNumber());
             flight.setStatus(flightRequest.getStatus());
-            flight.setDepartureAirport(flightRequest.getDepartureAirport());
-            flight.setArrivalAirport(flightRequest.getArrivalAirport());
+            flight.setDepartureAirportEntity(flightRequest.getDepartureAirportEntity());
+            flight.setArrivalAirportEntity(flightRequest.getArrivalAirportEntity());
             flight.setAirplaneEntity(flightRequest.getAirplaneEntity());
             flight.setSeatPrice(flightRequest.getSeatPrice());
             return flights.save(flight);

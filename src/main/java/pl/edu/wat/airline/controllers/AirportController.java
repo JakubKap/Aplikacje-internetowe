@@ -3,53 +3,39 @@ package pl.edu.wat.airline.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.wat.airline.entities.Airport;
-import pl.edu.wat.airline.services.AirportService;
-
-import java.util.Optional;
+import pl.edu.wat.airline.dtos.AirportDto;
+import pl.edu.wat.airline.services.AirportServiceImpl;
 
 @RestController
 @RequestMapping("/api/airports")
 
 public class AirportController {
 
-    private AirportService airports;
+    private AirportServiceImpl airportService;
 
     @Autowired
-    public AirportController(AirportService airports) {
-        this.airports = airports;
+    public AirportController(AirportServiceImpl airportService) {
+        this.airportService = airportService;
     }
 
     @GetMapping("/all_airports")
-    public Iterable<Airport> getAllAirports(){
-        return airports.findAll();
+    public Iterable<AirportDto> getAllAirports(){
+        return airportService.findAll();
     }
 
     @GetMapping
-    public Optional<Airport> getById(@RequestParam Long id) {
-        return airports.findById(id);
+    public AirportDto getByIata(@RequestParam String iata) {
+        return airportService.findByIata(iata);
     }
 
     @PostMapping
-    public Airport addAirport(@RequestBody Airport airport) {
-        return airports.save(airport);
+    public AirportDto addAirport(@RequestBody AirportDto airportDto) {
+        return airportService.addAirport(airportDto);
     }
 
     @PutMapping
-    public Airport updateAirport(@RequestParam Long id, @RequestBody Airport airportRequest) {
-        return airports.findById(id).map(airport -> {
-            airport.setName(airportRequest.getName());
-            airport.setIata(airportRequest.getIata());
-            return airports.save(airport);
-        }).orElseThrow(() -> new RuntimeException("AirportId " + id + " not found."));
-    }
-
-    @DeleteMapping
-    public ResponseEntity<?> deleteAirport(@RequestParam Long id) {
-        return airports.findById(id).map(airport -> {
-            airports.deleteById(id);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new RuntimeException("AirportId " + id + " not found."));
+    public AirportDto updateAirportName(@RequestBody AirportDto airportDto) {
+        return airportService.updateAirportName(airportDto);
     }
 
 }
