@@ -33,7 +33,7 @@ public class Reservation implements Serializable {
     @ManyToOne
     @JoinColumn(name = "flightId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Flight flight;
+    private FlightEntity flightEntity;
 
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
@@ -41,7 +41,7 @@ public class Reservation implements Serializable {
     private UserEntity userEntity;
 
 
-    public Reservation(Long id, String reservationNo, Boolean isReservationPaid, Boolean isOnlineCheckInMade, Integer numOfAdults, Integer numOfInfants, Integer numOfChildren, String travelClass, Double reservationPrice, Flight flight, UserEntity userEntity) {
+    public Reservation(Long id, String reservationNo, Boolean isReservationPaid, Boolean isOnlineCheckInMade, Integer numOfAdults, Integer numOfInfants, Integer numOfChildren, String travelClass, Double reservationPrice, FlightEntity flightEntity, UserEntity userEntity) {
         this.id = id;
         this.reservationNo = reservationNo;
         this.isReservationPaid = isReservationPaid;
@@ -51,7 +51,7 @@ public class Reservation implements Serializable {
         this.numOfChildren = numOfChildren;
         this.travelClass = travelClass;
         this.reservationPrice = reservationPrice;
-        this.flight = flight;
+        this.flightEntity = flightEntity;
         this.userEntity = userEntity;
     }
 }

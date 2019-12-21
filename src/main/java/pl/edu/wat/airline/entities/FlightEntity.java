@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @Table(name = "ai_flight")
 
-public class Flight {
+public class FlightEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,10 +55,10 @@ public class Flight {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SeatPrice seatPrice;
 
-    public Flight() {
+    public FlightEntity() {
     }
 
-    public Flight(String flightNumber, LocalDateTime departureDate, LocalDateTime arrivalDate, LocalDateTime boardingDate, String gateNumber, String status, AirportEntity departureAirportEntity, AirportEntity arrivalAirportEntity, AirplaneEntity airplaneEntity, SeatPrice seatPrice) {
+    public FlightEntity(String flightNumber, LocalDateTime departureDate, LocalDateTime arrivalDate, LocalDateTime boardingDate, String gateNumber, String status, AirportEntity departureAirportEntity, AirportEntity arrivalAirportEntity, AirplaneEntity airplaneEntity, SeatPrice seatPrice) {
         this.flightNumber = flightNumber;
         this.departureDateTime = departureDate;
         this.arrivalDateTime = arrivalDate;

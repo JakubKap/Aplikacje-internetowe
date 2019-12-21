@@ -71,7 +71,7 @@ public class ReservationController {
             reservation.setNumOfChildren(reservationRequest.getNumOfChildren());
             reservation.setTravelClass(reservationRequest.getTravelClass());
             reservation.setReservationPrice(reservationRequest.getReservationPrice());
-            reservation.setFlight(reservationRequest.getFlight());
+            reservation.setFlightEntity(reservationRequest.getFlightEntity());
             reservation.setUserEntity(reservationRequest.getUserEntity());
             return reservations.save(reservation);
         }).orElseThrow(() -> new RuntimeException("ReservationId " + id + " not found."));
