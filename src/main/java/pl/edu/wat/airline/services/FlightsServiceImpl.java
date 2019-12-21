@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import pl.edu.wat.airline.dtos.AirplaneDto;
 import pl.edu.wat.airline.dtos.AirportDto;
 import pl.edu.wat.airline.dtos.FlightDto;
+import pl.edu.wat.airline.dtos.SeatPriceDto;
 import pl.edu.wat.airline.entities.AirplaneEntity;
 import pl.edu.wat.airline.entities.AirportEntity;
 import pl.edu.wat.airline.entities.FlightEntity;
+import pl.edu.wat.airline.entities.SeatPriceEntity;
 import pl.edu.wat.airline.repositories.AirplanesRepository;
 import pl.edu.wat.airline.repositories.AirportsRepository;
 import pl.edu.wat.airline.repositories.FlightsRepository;
+import pl.edu.wat.airline.repositories.SeatPricesRepository;
 import pl.edu.wat.airline.services.interfaces.FlightsService;
 
 import java.time.LocalDateTime;
@@ -24,12 +27,15 @@ public class FlightsServiceImpl implements FlightsService {
     private FlightsRepository flightsRepository;
     private AirportsRepository airportsRepository;
     private AirplanesRepository airplanesRepository;
+    private SeatPricesRepository seatPricesRepository;
 
     @Autowired
-    public FlightsServiceImpl(FlightsRepository flightsRepository, AirportsRepository airportsRepository, AirplanesRepository airplanesRepository ) {
+    public FlightsServiceImpl(FlightsRepository flightsRepository, AirportsRepository airportsRepository,
+                              AirplanesRepository airplanesRepository, SeatPricesRepository seatPricesRepository) {
         this.flightsRepository = flightsRepository;
         this.airportsRepository = airportsRepository;
         this.airplanesRepository = airplanesRepository;
+        this.seatPricesRepository = seatPricesRepository;
     }
 
     public Iterable<FlightDto> findAll() {
@@ -40,7 +46,7 @@ public class FlightsServiceImpl implements FlightsService {
                         flightDtos.add(new FlightDto(u.getFlightNumber(), u.getDepartureDateTime(), u.getArrivalDateTime(),
                                 u.getBoardingDateTime(), u.getGateNumber(), u.getStatus(),
                                 getDepAirportDtoFromFlightEntity(u), getArrAirportDtoFromFlightEntity(u), getAirplaneDtoFromFlightEntity(u),
-                                u.getSeatPriceEntity())));
+                                getSeatPriceDtoFromFlightEntity(u))));
 
         return flightDtos;
     }
@@ -55,7 +61,7 @@ public class FlightsServiceImpl implements FlightsService {
         return new FlightDto(flightEntity.getFlightNumber(), flightEntity.getDepartureDateTime(), flightEntity.getArrivalDateTime(),
                 flightEntity.getBoardingDateTime(), flightEntity.getGateNumber(), flightEntity.getStatus(),
                 getDepAirportDtoFromFlightEntity(flightEntity), getArrAirportDtoFromFlightEntity(flightEntity), getAirplaneDtoFromFlightEntity(flightEntity),
-                flightEntity.getSeatPriceEntity());
+                getSeatPriceDtoFromFlightEntity(flightEntity));
     }
 
     public FlightDto findByFlightNumberAndDepartureDateTimeIsGreaterThanEqual(String flightNumber, LocalDateTime departureDatetime){
@@ -70,7 +76,7 @@ public class FlightsServiceImpl implements FlightsService {
         return new FlightDto(flightEntity.getFlightNumber(), flightEntity.getDepartureDateTime(), flightEntity.getArrivalDateTime(),
                 flightEntity.getBoardingDateTime(), flightEntity.getGateNumber(), flightEntity.getStatus(),
                 getDepAirportDtoFromFlightEntity(flightEntity), getArrAirportDtoFromFlightEntity(flightEntity), getAirplaneDtoFromFlightEntity(flightEntity),
-                flightEntity.getSeatPriceEntity());
+                getSeatPriceDtoFromFlightEntity(flightEntity));
     }
 
     public FlightDto addFlight(FlightDto flightDto) {
@@ -89,16 +95,21 @@ public class FlightsServiceImpl implements FlightsService {
         AirplaneDto airplane = flightDto.getAirplane();
         AirplaneEntity airplaneEntity = airplanesRepository.findByName(airplane.getName());
 
+        SeatPriceDto seatPrice = flightDto.getSeatPrice();
+        SeatPriceEntity seatPriceEntity = seatPricesRepository.findSeatPriceEntity(seatPrice.getEconomicClassAdultPrice(), seatPrice.getBusinessClassAdultPrice(), seatPrice.getFirstClassAdultPrice(),
+                seatPrice.getEconomicClassInfantPrice(), seatPrice.getBusinessClassInfantPrice(), seatPrice.getFirstClassInfantPrice(),
+                seatPrice.getEconomicClassChildPrice(), seatPrice.getBusinessClassChildPrice(), seatPrice.getFirstClassChildPrice());
+
         FlightEntity flightEntity = new FlightEntity(flightDto.getFlightNumber(), flightDto.getDepartureDateTime(), flightDto.getArrivalDateTime(),
                 flightDto.getBoardingDateTime(), flightDto.getGateNumber(), flightDto.getStatus(),
-                depAirportEntity, arrAirportEntity, airplaneEntity, flightDto.getSeatPriceEntity());
+                depAirportEntity, arrAirportEntity, airplaneEntity, seatPriceEntity);
 
         FlightEntity savedFlightEntity = flightsRepository.save(flightEntity);
 
         return new FlightDto(savedFlightEntity.getFlightNumber(), savedFlightEntity.getDepartureDateTime(), savedFlightEntity.getArrivalDateTime(),
                 savedFlightEntity.getBoardingDateTime(), savedFlightEntity.getGateNumber(), savedFlightEntity.getStatus(),
                 getDepAirportDtoFromFlightEntity(savedFlightEntity), getArrAirportDtoFromFlightEntity(savedFlightEntity), getAirplaneDtoFromFlightEntity(savedFlightEntity),
-                savedFlightEntity.getSeatPriceEntity());
+                getSeatPriceDtoFromFlightEntity(savedFlightEntity));
     }
 
     public FlightDto updateFlight(FlightDto flightDto){
@@ -124,14 +135,19 @@ public class FlightsServiceImpl implements FlightsService {
             AirplaneEntity airplaneEntity = airplanesRepository.findByName(airplane.getName());
             flightEntity.setAirplaneEntity(airplaneEntity);
 
-            flightEntity.setSeatPriceEntity(flightDto.getSeatPriceEntity());
+             SeatPriceDto seatPrice = flightDto.getSeatPrice();
+             SeatPriceEntity seatPriceEntity = seatPricesRepository.findSeatPriceEntity(seatPrice.getEconomicClassAdultPrice(), seatPrice.getBusinessClassAdultPrice(), seatPrice.getFirstClassAdultPrice(),
+                     seatPrice.getEconomicClassInfantPrice(), seatPrice.getBusinessClassInfantPrice(), seatPrice.getFirstClassInfantPrice(),
+                     seatPrice.getEconomicClassChildPrice(), seatPrice.getBusinessClassChildPrice(), seatPrice.getFirstClassChildPrice());
+            flightEntity.setSeatPriceEntity(seatPriceEntity);
+
             return flightsRepository.save(flightEntity);
         }).orElseThrow(() -> new RuntimeException("FlightId " + flightEntityId + " not found."));
 
          return  new FlightDto(updatedFlightEntity.getFlightNumber(), updatedFlightEntity.getDepartureDateTime(), updatedFlightEntity.getArrivalDateTime(),
                  updatedFlightEntity.getBoardingDateTime(), updatedFlightEntity.getGateNumber(), updatedFlightEntity.getStatus(),
                  getDepAirportDtoFromFlightEntity(updatedFlightEntity), getArrAirportDtoFromFlightEntity(updatedFlightEntity), getAirplaneDtoFromFlightEntity(updatedFlightEntity),
-                 updatedFlightEntity.getSeatPriceEntity());
+                 getSeatPriceDtoFromFlightEntity(updatedFlightEntity));
     }
 
     private AirportDto getDepAirportDtoFromFlightEntity(FlightEntity flightEntity){
@@ -148,5 +164,12 @@ public class FlightsServiceImpl implements FlightsService {
         AirplaneEntity airplaneEntity = flightEntity.getAirplaneEntity();
         return new AirplaneDto(airplaneEntity.getName(), airplaneEntity.getEconomicSeatsAmount(),
                 airplaneEntity.getBusinessSeatsAmount(), airplaneEntity.getFirstClassSeatsAmount());
+    }
+
+    private SeatPriceDto getSeatPriceDtoFromFlightEntity(FlightEntity flightEntity){
+        SeatPriceEntity seatPriceEntity = flightEntity.getSeatPriceEntity();
+        return new SeatPriceDto(seatPriceEntity.getEconomicClassAdultPrice(), seatPriceEntity.getBusinessClassAdultPrice(), seatPriceEntity.getFirstClassAdultPrice(),
+                seatPriceEntity.getEconomicClassInfantPrice(), seatPriceEntity.getBusinessClassInfantPrice(), seatPriceEntity.getFirstClassInfantPrice(),
+                seatPriceEntity.getEconomicClassChildPrice(), seatPriceEntity.getBusinessClassChildPrice(), seatPriceEntity.getFirstClassChildPrice());
     }
 }

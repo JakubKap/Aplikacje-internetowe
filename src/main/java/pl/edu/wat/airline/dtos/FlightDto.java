@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.wat.airline.entities.SeatPriceEntity;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -28,5 +27,5 @@ public class FlightDto {
     private AirportDto departureAirport;
     private AirportDto arrivalAirport;
     private AirplaneDto airplane;
-    private SeatPriceEntity seatPriceEntity;
+    private SeatPriceDto seatPrice;
 }

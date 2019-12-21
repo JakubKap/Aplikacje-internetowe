@@ -39,6 +39,20 @@ public class SeatPriceEntity {
         this.firstClassChildPrice = firstClassChildPrice;
     }
 
+    public SeatPriceEntity(Long id, Double economicClassAdultPrice, Double businessClassAdultPrice, Double firstClassAdultPrice, Double economicClassInfantPrice, Double businessClassInfantPrice, Double firstClassInfantPrice, Double economicClassChildPrice, Double businessClassChildPrice, Double firstClassChildPrice) {
+        this.id = id;
+        this.economicClassAdultPrice = economicClassAdultPrice;
+        this.businessClassAdultPrice = businessClassAdultPrice;
+        this.firstClassAdultPrice = firstClassAdultPrice;
+        this.economicClassInfantPrice = economicClassInfantPrice;
+        this.businessClassInfantPrice = businessClassInfantPrice;
+        this.firstClassInfantPrice = firstClassInfantPrice;
+        this.economicClassChildPrice = economicClassChildPrice;
+        this.businessClassChildPrice = businessClassChildPrice;
+        this.firstClassChildPrice = firstClassChildPrice;
+    }
+
+
     public Long getId() {
         return id;
     }
