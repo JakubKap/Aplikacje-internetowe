@@ -1,6 +1,8 @@
 package pl.edu.wat.airline.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.dtos.AirportDto;
 import pl.edu.wat.airline.services.AirportsServiceImpl;
@@ -18,23 +20,35 @@ public class AirportController {
     }
 
     @GetMapping("/all_airports")
-    public Iterable<AirportDto> getAllAirports(){
-        return airportService.findAll();
+    public ResponseEntity<Iterable<AirportDto>> getAllAirports(){
+        return new ResponseEntity<>(airportService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping
-    public AirportDto getByIata(@RequestParam String iata) {
-        return airportService.findByIata(iata);
+    public ResponseEntity getByIata(@RequestParam String iata) {
+        AirportDto airportDto = airportService.findByIata(iata);
+
+        if(airportDto == null){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(airportDto, HttpStatus.OK);
     }
 
     @PostMapping
-    public AirportDto addAirport(@RequestBody AirportDto airportDto) {
-        return airportService.addAirport(airportDto);
+    public ResponseEntity addAirport(@RequestBody AirportDto airportDto) {
+        AirportDto savedAirportDto = airportService.addAirport(airportDto);
+
+        if(savedAirportDto == null){
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(savedAirportDto, HttpStatus.OK);
     }
 
     @PutMapping
-    public AirportDto updateAirportName(@RequestBody AirportDto airportDto) {
-        return airportService.updateAirportName(airportDto);
+    public ResponseEntity<AirportDto> updateAirportName(@RequestBody AirportDto airportDto) {
+        return new ResponseEntity<>(airportService.updateAirportName(airportDto), HttpStatus.OK);
     }
 
 }
