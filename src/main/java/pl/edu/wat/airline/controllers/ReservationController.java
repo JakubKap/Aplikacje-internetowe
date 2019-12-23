@@ -1,12 +1,14 @@
 package pl.edu.wat.airline.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.wat.airline.entities.Reservation;
+import pl.edu.wat.airline.dtos.ReservationDto;
+import pl.edu.wat.airline.entities.ReservationEntity;
 import pl.edu.wat.airline.services.EmailService;
-import pl.edu.wat.airline.services.ReservationService;
+import pl.edu.wat.airline.services.ReservationServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,38 +17,60 @@ import java.util.Optional;
 @RequestMapping("/api/reservations")
 public class ReservationController {
 
-    private ReservationService reservations;
+    private ReservationServiceImpl reservationServiceImpl;
     private EmailService email;
 
     @Autowired
-    public ReservationController(ReservationService reservations, EmailService email) {
-        this.reservations = reservations;
+    public ReservationController(ReservationServiceImpl reservationServiceImpl, EmailService email) {
+        this.reservationServiceImpl = reservationServiceImpl;
         this.email = email;
     }
 
     @GetMapping("/all_reservations")
-    public Iterable<Reservation> getAllReservations() {
-        return reservations.findAll();
+    public ResponseEntity<Iterable<ReservationDto>> getAllReservations() {
+        return new ResponseEntity<>(reservationServiceImpl.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping
-    public Optional<Reservation> getById(@RequestParam Long id){
-        return reservations.findById(id);
-    }
+//    @GetMapping
+//    public Optional<ReservationEntity> getById(@RequestParam Long id){
+//        return reservations.findById(id);
+//    }
 
     @GetMapping("/user_reservation")
-    public List<Reservation> findByUserLogin(@RequestParam String userLogin){
-        return reservations.findByUserLogin(userLogin);
+    public ResponseEntity<ReservationDto> findByUserLogin(@RequestParam String userLogin) {
+        ReservationDto reservationDto = reservationServiceImpl.findByUserLogin(userLogin);
+        if(reservationDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(reservationDto, HttpStatus.OK);
     }
 
     @GetMapping("/reservation")
-    public Optional<Reservation> getByReservationNo(@RequestParam String reservationNo){
-        return reservations.findByReservationNo(reservationNo);
+    public ResponseEntity<ReservationDto> getReservationNo(@RequestParam String reservationNo) {
+        ReservationDto reservationDto = reservationServiceImpl.findByReservationNo(reservationNo);
+        if(reservationDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(reservationDto, HttpStatus.OK);
     }
 
+//    @GetMapping("/reservation")
+//    public Optional<ReservationEntity> getByReservationNo(@RequestParam String reservationNo){
+//        return reservations.findByReservationNo(reservationNo);
+//    }
+
+//    @PostMapping
+//    public ReservationEntity addReservation(@RequestBody ReservationEntity reservationEntity){
+//        return reservations.save(reservationEntity);
+//    }
     @PostMapping
-    public Reservation addReservation(@RequestBody Reservation reservation){
-        return reservations.save(reservation);
+    public ResponseEntity addReservation(@RequestBody ReservationDto reservationDto) {
+        ReservationDto savedReservationDto = reservationServiceImpl.addReservation(reservationDto);
+
+        if(savedReservationDto == null) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(savedReservationDto, HttpStatus.OK);
     }
 
     @GetMapping("mailAboutReservation")
@@ -60,49 +84,54 @@ public class ReservationController {
         }
     }
 
+//    @PutMapping
+//    public ReservationEntity updateReservation(@RequestParam Long id, @RequestBody ReservationEntity reservationEntityRequest){
+//        return reservations.findById(id).map(reservationEntity -> {
+//            reservationEntity.setReservationNo(reservationEntityRequest.getReservationNo());
+//            reservationEntity.setIsReservationPaid(reservationEntityRequest.getIsReservationPaid());
+//            reservationEntity.setIsOnlineCheckInMade(reservationEntityRequest.getIsOnlineCheckInMade());
+//            reservationEntity.setNumOfAdults(reservationEntityRequest.getNumOfAdults());
+//            reservationEntity.setNumOfInfants(reservationEntityRequest.getNumOfInfants());
+//            reservationEntity.setNumOfChildren(reservationEntityRequest.getNumOfChildren());
+//            reservationEntity.setTravelClass(reservationEntityRequest.getTravelClass());
+//            reservationEntity.setReservationPrice(reservationEntityRequest.getReservationPrice());
+//            reservationEntity.setFlightEntity(reservationEntityRequest.getFlightEntity());
+//            reservationEntity.setUserEntity(reservationEntityRequest.getUserEntity());
+//            return reservations.save(reservationEntity);
+//        }).orElseThrow(() -> new RuntimeException("ReservationId " + id + " not found."));
+//    }
+
     @PutMapping
-    public Reservation updateReservation(@RequestParam Long id, @RequestBody Reservation reservationRequest){
-        return reservations.findById(id).map(reservation -> {
-            reservation.setReservationNo(reservationRequest.getReservationNo());
-            reservation.setIsReservationPaid(reservationRequest.getIsReservationPaid());
-            reservation.setIsOnlineCheckInMade(reservationRequest.getIsOnlineCheckInMade());
-            reservation.setNumOfAdults(reservationRequest.getNumOfAdults());
-            reservation.setNumOfInfants(reservationRequest.getNumOfInfants());
-            reservation.setNumOfChildren(reservationRequest.getNumOfChildren());
-            reservation.setTravelClass(reservationRequest.getTravelClass());
-            reservation.setReservationPrice(reservationRequest.getReservationPrice());
-            reservation.setFlightEntity(reservationRequest.getFlightEntity());
-            reservation.setUserEntity(reservationRequest.getUserEntity());
-            return reservations.save(reservation);
-        }).orElseThrow(() -> new RuntimeException("ReservationId " + id + " not found."));
+    public ResponseEntity<ReservationDto> updateReservation(@RequestBody ReservationDto reservationDto) {
+        return new ResponseEntity<>(reservationServiceImpl.updateReservation(reservationDto), HttpStatus.OK);
     }
 
     @PutMapping("/paid")
-    public Reservation updatePaidStatus(@RequestParam Long id) {
-        return reservations.findById(id).map(reservation -> {
-            reservation.setIsReservationPaid(true);
-            return reservations.save(reservation);
+    public ReservationEntity updatePaidStatus(@RequestParam Long id) {
+        return reservations.findById(id).map(reservationEntity -> {
+            reservationEntity.setIsReservationPaid(true);
+            return reservations.save(reservationEntity);
         }).orElseThrow(() -> new RuntimeException("Cannot pay for reservationId " + id + "."));
     }
 
     @DeleteMapping
     public ResponseEntity<?> deleteReservation(@RequestParam Long id){
-        return reservations.findById(id).map(reservation -> {
+        return reservations.findById(id).map(reservationEntity -> {
             reservations.deleteById(id);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new RuntimeException("ReservationId " + id + " not found."));
     }
 
     @DeleteMapping("/user")
-    public ResponseEntity<?> deleteUserReservation(@RequestBody Reservation reservation) {
+    public ResponseEntity<?> deleteUserReservation(@RequestBody ReservationEntity reservationEntity) {
         try {
-            email.sendEmail(reservation.getUserEntity().getEmail(),"AirportApp reservation No. " + reservation.getReservationNo(), "Faithfully AirportApp team");
+            email.sendEmail(reservationEntity.getUserEntity().getEmail(),"AirportApp reservation No. " + reservationEntity.getReservationNo(), "Faithfully AirportApp team");
         } catch (MailAuthenticationException e) {
             System.out.println("Wrong user email address");
         }
-        return reservations.findById(reservation.getId()).map(r -> {
+        return reservations.findById(reservationEntity.getId()).map(r -> {
             reservations.deleteById(r.getId());
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new RuntimeException("ReservationId " + reservation.getId() + " not found."));
+        }).orElseThrow(() -> new RuntimeException("ReservationId " + reservationEntity.getId() + " not found."));
     }
 }

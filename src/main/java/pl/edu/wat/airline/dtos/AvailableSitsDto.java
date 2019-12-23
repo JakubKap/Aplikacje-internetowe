@@ -1,27 +1,22 @@
-package pl.edu.wat.airline.entities;
+package pl.edu.wat.airline.dtos;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "available_seats")
-public class AvailableSits {
+@NoArgsConstructor
+@AllArgsConstructor
+public class AvailableSitsDto {
 
-    @Id
-    private Long flightId;
+    private FlightDto flightDto;
+    private AirportDto departureAirportDto;
+    private AirportDto arrivalAirportDto;
+    private AirplaneDto airplaneDto;
+    private SeatPriceDto seatPriceDto;
 
-    private Integer airplaneId;
-    private Integer seatClassId;
-    private Integer departureId;
-    private Integer arrivalId;
     private String flightNumber;
     private String gateNumber;
     private String departureDateTime;
@@ -43,4 +38,3 @@ public class AvailableSits {
     private Double firstClassInfantPrice;
     private Double price;
 }
-

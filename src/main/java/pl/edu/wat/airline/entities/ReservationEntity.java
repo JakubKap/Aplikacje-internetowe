@@ -12,9 +12,10 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "ai_reservation")
 
-public class Reservation implements Serializable {
+public class ReservationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,6 @@ public class Reservation implements Serializable {
     private String travelClass;
     private Double reservationPrice;
 
-
     @ManyToOne
     @JoinColumn(name = "flightId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -40,9 +40,8 @@ public class Reservation implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity userEntity;
 
-
-    public Reservation(Long id, String reservationNo, Boolean isReservationPaid, Boolean isOnlineCheckInMade, Integer numOfAdults, Integer numOfInfants, Integer numOfChildren, String travelClass, Double reservationPrice, FlightEntity flightEntity, UserEntity userEntity) {
-        this.id = id;
+    public ReservationEntity(String reservationNo, Boolean isReservationPaid, Boolean isOnlineCheckInMade, Integer numOfAdults, Integer numOfInfants, Integer numOfChildren,
+                             String travelClass, Double reservationPrice, FlightEntity flightEntity, UserEntity userEntity) {
         this.reservationNo = reservationNo;
         this.isReservationPaid = isReservationPaid;
         this.isOnlineCheckInMade = isOnlineCheckInMade;
