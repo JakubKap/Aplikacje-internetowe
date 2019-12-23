@@ -107,31 +107,38 @@ public class ReservationController {
     }
 
     @PutMapping("/paid")
-    public ReservationEntity updatePaidStatus(@RequestParam Long id) {
-        return reservations.findById(id).map(reservationEntity -> {
-            reservationEntity.setIsReservationPaid(true);
-            return reservations.save(reservationEntity);
-        }).orElseThrow(() -> new RuntimeException("Cannot pay for reservationId " + id + "."));
+    public ResponseEntity<ReservationDto> updatePaidStatus(@RequestParam String reservationNo) {
+        return new ResponseEntity<>(reservationServiceImpl.updatePaidStatus(reservationNo), HttpStatus.OK);
     }
+
+//    @DeleteMapping
+//    public ResponseEntity<?> deleteReservation(@RequestParam Long id){
+//        return reservations.findById(id).map(reservationEntity -> {
+//            reservations.deleteById(id);
+//            return ResponseEntity.ok().build();
+//        }).orElseThrow(() -> new RuntimeException("ReservationId " + id + " not found."));
+//    }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteReservation(@RequestParam Long id){
-        return reservations.findById(id).map(reservationEntity -> {
-            reservations.deleteById(id);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new RuntimeException("ReservationId " + id + " not found."));
+    public ResponseEntity<?> deleteReservation(@RequestParam String reservationNo) {
+        return new ResponseEntity<>(reservationServiceImpl.deleteReservation(reservationNo), HttpStatus.OK);
     }
 
+//    @DeleteMapping("/user")
+//    public ResponseEntity<?> deleteUserReservation(@RequestBody ReservationEntity reservationEntity) {
+//        try {
+//            email.sendEmail(reservationEntity.getUserEntity().getEmail(),"AirportApp reservation No. " + reservationEntity.getReservationNo(), "Faithfully AirportApp team");
+//        } catch (MailAuthenticationException e) {
+//            System.out.println("Wrong user email address");
+//        }
+//        return reservations.findById(reservationEntity.getId()).map(r -> {
+//            reservations.deleteById(r.getId());
+//            return ResponseEntity.ok().build();
+//        }).orElseThrow(() -> new RuntimeException("ReservationId " + reservationEntity.getId() + " not found."));
+//    }
+
     @DeleteMapping("/user")
-    public ResponseEntity<?> deleteUserReservation(@RequestBody ReservationEntity reservationEntity) {
-        try {
-            email.sendEmail(reservationEntity.getUserEntity().getEmail(),"AirportApp reservation No. " + reservationEntity.getReservationNo(), "Faithfully AirportApp team");
-        } catch (MailAuthenticationException e) {
-            System.out.println("Wrong user email address");
-        }
-        return reservations.findById(reservationEntity.getId()).map(r -> {
-            reservations.deleteById(r.getId());
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new RuntimeException("ReservationId " + reservationEntity.getId() + " not found."));
+    public ResponseEntity<ReservationDto> deleteUserReservation(@RequestBody ReservationDto reservationDto) {
+        return new ResponseEntity<>(reservationServiceImpl.deleteUserReservation(reservationDto), HttpStatus.OK);
     }
 }

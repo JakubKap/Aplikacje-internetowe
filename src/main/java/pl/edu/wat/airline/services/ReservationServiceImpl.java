@@ -1,7 +1,10 @@
 package pl.edu.wat.airline.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.edu.wat.airline.dtos.*;
 import pl.edu.wat.airline.entities.*;
 import pl.edu.wat.airline.repositories.*;
@@ -20,6 +23,7 @@ public class ReservationServiceImpl implements ReservationService {
     private AirportsRepository airportsRepository;
     private AirplanesRepository airplanesRepository;
     private SeatPricesRepository seatPricesRepository;
+    private EmailService email;
 
     @Autowired
     public ReservationServiceImpl(ReservationRepository reservationRepository,
@@ -27,13 +31,15 @@ public class ReservationServiceImpl implements ReservationService {
                                   UsersRepository usersRepository,
                                   AirportsRepository airportsRepository,
                                   AirplanesRepository airplanesRepository,
-                                  SeatPricesRepository seatPricesRepository) {
+                                  SeatPricesRepository seatPricesRepository,
+                                  EmailService emailService) {
         this.reservationRepository = reservationRepository;
         this.flightsRepository = flightsRepository;
         this.usersRepository = usersRepository;
         this.airportsRepository = airportsRepository;
         this.airplanesRepository = airplanesRepository;
         this.seatPricesRepository = seatPricesRepository;
+        this.email = emailService;
     }
 
 //    public Optional<ReservationEntity> findById(Long id) {
@@ -224,8 +230,78 @@ public class ReservationServiceImpl implements ReservationService {
                 getUserDtoFromReservationEntity(updatedReservationEntity));
     }
 
-    public void deleteById(Long id) {
-        reservationRepository.deleteById(id);
+//    public void deleteById(Long id) {
+//        reservationRepository.deleteById(id);
+//    }
+
+    public ReservationDto updatePaidStatus(@RequestParam String reservationNo) {
+        Long reservationEntityId = reservationRepository.findByReservationNo(reservationNo).getId();
+
+        ReservationEntity updatedReservationEntity = reservationRepository.findById(reservationEntityId).map(reservationEntity -> {
+
+            reservationEntity.setIsReservationPaid(true);
+
+            return reservationRepository.save(reservationEntity);
+        }).orElseThrow(() -> new RuntimeException("Cannot pay for reservationId " + reservationEntityId + "."));
+
+        return new ReservationDto(
+                updatedReservationEntity.getReservationNo(),
+                updatedReservationEntity.getIsReservationPaid(),
+                updatedReservationEntity.getIsOnlineCheckInMade(),
+                updatedReservationEntity.getNumOfAdults(),
+                updatedReservationEntity.getNumOfInfants(),
+                updatedReservationEntity.getNumOfChildren(),
+                updatedReservationEntity.getTravelClass(),
+                updatedReservationEntity.getReservationPrice(),
+                getFlightDtoFromReservationEntity(updatedReservationEntity),
+                getUserDtoFromReservationEntity(updatedReservationEntity));
+    }
+
+    public ReservationDto deleteReservation(@RequestParam String reservationNo) {
+        Long reservationEntityId = reservationRepository.findByReservationNo(reservationNo).getId();
+
+        ReservationEntity deleteReservationEntity = reservationRepository.findById(reservationEntityId).map(r -> {
+
+            reservationRepository.delete(r);
+
+            return r;
+        }).orElseThrow(() -> new RuntimeException("Reservation " + reservationNo + " cannot be deleted."));
+        return new ReservationDto(
+                deleteReservationEntity.getReservationNo(),
+                deleteReservationEntity.getIsReservationPaid(),
+                deleteReservationEntity.getIsOnlineCheckInMade(),
+                deleteReservationEntity.getNumOfAdults(),
+                deleteReservationEntity.getNumOfInfants(),
+                deleteReservationEntity.getNumOfChildren(),
+                deleteReservationEntity.getTravelClass(),
+                deleteReservationEntity.getReservationPrice(),
+                getFlightDtoFromReservationEntity(deleteReservationEntity),
+                getUserDtoFromReservationEntity(deleteReservationEntity));
+    }
+
+    public ReservationDto deleteUserReservation(@RequestBody ReservationDto reservationDto) {
+        Long reservationEntityId = reservationRepository.findByReservationNo(reservationDto.getReservationNo()).getId();
+
+        ReservationEntity deleteReservationEntity = reservationRepository.findById(reservationEntityId).map(r -> {
+            try {
+                email.sendEmail(reservationDto.getUserDto().getEmail(), "AirportApp reservation No. " + reservationDto.getReservationNo(), "Faithfully AirportApp team");
+            } catch (MailAuthenticationException e) {
+                System.out.println("Wrong user email address");
+            }
+            reservationRepository.delete(r);
+            return r;
+        }).orElseThrow(() -> new RuntimeException("Email cannot be send"));
+        return new ReservationDto(
+                deleteReservationEntity.getReservationNo(),
+                deleteReservationEntity.getIsReservationPaid(),
+                deleteReservationEntity.getIsOnlineCheckInMade(),
+                deleteReservationEntity.getNumOfAdults(),
+                deleteReservationEntity.getNumOfInfants(),
+                deleteReservationEntity.getNumOfChildren(),
+                deleteReservationEntity.getTravelClass(),
+                deleteReservationEntity.getReservationPrice(),
+                getFlightDtoFromReservationEntity(deleteReservationEntity),
+                getUserDtoFromReservationEntity(deleteReservationEntity));
     }
 
     private FlightDto getFlightDtoFromReservationEntity(ReservationEntity reservationEntity) {
