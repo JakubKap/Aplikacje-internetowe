@@ -35,11 +35,11 @@ public interface AvailableSitsRepository extends CrudRepository<AvailableSitsEnt
 //
     @Query(
             "SELECT new pl.edu.wat.airline.entities.AvailableSitsEntity(" +
-                    "flightId, airplaneId, seatClassId, departureId, arrivalId, " +
+                    "id, flightEntity, airplaneEntity, seatClassEntity, departureEntity, arrivalEntity, " +
                     "flightNumber, gateNumber, " +
                     "departureDateTime,  arrivalDateTime, boardingDateTime, " +
                     "departureAirport, arrivalAirport, " +
-                    "busAvailable, ekoAvailable, pierAvailable, " +
+                    "ekoAvailable, busAvailable, pierAvailable, " +
 //                    "CASE " +
 //                    "WHEN :classSeats = 'Ekonomiczna' THEN ekoAvailable " +
 //                    "WHEN :classSeats = 'Biznes' THEN busAvailable " +
@@ -68,11 +68,11 @@ public interface AvailableSitsRepository extends CrudRepository<AvailableSitsEnt
 
     @Query(
             "SELECT new pl.edu.wat.airline.entities.AvailableSitsEntity(" +
-                    "flightId, airplaneId, seatClassId, departureId, arrivalId, " +
+                    "id, flightEntity, airplaneEntity, seatClassEntity, departureEntity, arrivalEntity, " +
                     "flightNumber, gateNumber, " +
                     "departureDateTime,  arrivalDateTime, boardingDateTime, " +
                     "departureAirport, arrivalAirport, " +
-                    "busAvailable, ekoAvailable, pierAvailable, " +
+                    "ekoAvailable, busAvailable, pierAvailable, " +
                     "businessClassAdultPrice, businessClassChildPrice, businessClassInfantPrice, " +
                     "economicClassAdultPrice, economicClassChildPrice, economicClassInfantPrice," +
                     "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice, price) " +
@@ -90,11 +90,11 @@ public interface AvailableSitsRepository extends CrudRepository<AvailableSitsEnt
 
     @Query(
             "SELECT new pl.edu.wat.airline.entities.AvailableSitsEntity(" +
-                    "flightId, airplaneId, seatClassId, departureId, arrivalId, " +
+                    "id, flightEntity, airplaneEntity, seatClassEntity, departureEntity, arrivalEntity, " +
                     "flightNumber, gateNumber, " +
                     "departureDateTime,  arrivalDateTime, boardingDateTime, " +
                     "departureAirport, arrivalAirport, " +
-                    "busAvailable, ekoAvailable, pierAvailable, " +
+                    "ekoAvailable, busAvailable, pierAvailable, " +
                     "businessClassAdultPrice, businessClassChildPrice, businessClassInfantPrice, " +
                     "economicClassAdultPrice, economicClassChildPrice, economicClassInfantPrice," +
                     "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice, price) " +
