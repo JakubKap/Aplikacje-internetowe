@@ -35,52 +35,52 @@ public interface AvailableSitsRepository extends CrudRepository<AvailableSitsEnt
 //
     @Query(
             "SELECT new pl.edu.wat.airline.entities.AvailableSitsEntity(" +
-                    "id, flightEntity, airplaneEntity, seatClassEntity, departureEntity, arrivalEntity, " +
-                    "flightNumber, gateNumber, " +
-                    "departureDateTime,  arrivalDateTime, boardingDateTime, " +
-                    "departureAirport, arrivalAirport, " +
-                    "ekoAvailable, busAvailable, pierAvailable, " +
+                    "a.id, a.flightEntity, a.airplaneEntity, a.seatClassEntity, a.departureEntity, a.arrivalEntity, " +
+                    "a.flightNumber, a.gateNumber, " +
+                    "a.departureDateTime, a.arrivalDateTime, a.boardingDateTime, " +
+                    "a.departureAirport, a.arrivalAirport, " +
+                    "a.ekoAvailable, a.busAvailable, a.pierAvailable, " +
 //                    "CASE " +
 //                    "WHEN :classSeats = 'Ekonomiczna' THEN ekoAvailable " +
 //                    "WHEN :classSeats = 'Biznes' THEN busAvailable " +
 //                    "WHEN :classSeats = 'Pierwsza' THEN pierAvailable " +
 //                    "ELSE 0 END, " +
-                    "businessClassAdultPrice, businessClassChildPrice, businessClassInfantPrice, " +
-                    "economicClassAdultPrice, economicClassChildPrice, economicClassInfantPrice," +
-                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice, price) " +
-                    "FROM AvailableSitsEntity " +
-                    "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(departureDateTime,1,10),'%')" +
-                    "AND departureAirport = :departureAirport " +
-                    "AND arrivalAirport = :arrivalAirport " +
-                    "AND busAvailable >= :classSeatsNum"
+                    "a.businessClassAdultPrice, a.businessClassChildPrice, a.businessClassInfantPrice, " +
+                    "a.economicClassAdultPrice, a.economicClassChildPrice, a.economicClassInfantPrice," +
+                    "a.firstClassAdultPrice, a.firstClassChildPrice, a.firstClassInfantPrice, a.price) " +
+                    "FROM AvailableSitsEntity a " +
+                    "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(departureDateTime,1,10),'%') " +
+                    "AND a.departureAirport = :departureAirport " +
+                    "AND a.arrivalAirport = :arrivalAirport " +
+                    "AND a.busAvailable >= :classSeatsNum"
 //                    "AND " +
 //                    "CASE " +
 //                    "WHEN :classSeats = 'Ekonomiczna' THEN ekoAvailable " +
 //                    "WHEN :classSeats = 'Biznes' THEN busAvailable " +
 //                    "WHEN :classSeats = 'Pierwsza' THEN pierAvailable " +
 //                    "ELSE 0 END >= :classSeatsNum"
-    )
+            )
     Iterable<AvailableSitsEntity> findAvailableBusSits(@Param("departureDateTime") String departureDateTime,
-                                                       @Param("departureAirport")  String departureAirport,
-                                                       @Param("arrivalAirport")    String arrivalAirport,
-                                                       @Param("classSeatsNum")     Integer classSeatsNum
+                                                       @Param("departureAirport") String departureAirport,
+                                                       @Param("arrivalAirport") String arrivalAirport,
+                                                       @Param("classSeatsNum") Integer classSeatsNum
     );
 
     @Query(
             "SELECT new pl.edu.wat.airline.entities.AvailableSitsEntity(" +
-                    "id, flightEntity, airplaneEntity, seatClassEntity, departureEntity, arrivalEntity, " +
-                    "flightNumber, gateNumber, " +
-                    "departureDateTime,  arrivalDateTime, boardingDateTime, " +
-                    "departureAirport, arrivalAirport, " +
-                    "ekoAvailable, busAvailable, pierAvailable, " +
-                    "businessClassAdultPrice, businessClassChildPrice, businessClassInfantPrice, " +
-                    "economicClassAdultPrice, economicClassChildPrice, economicClassInfantPrice," +
-                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice, price) " +
-                    "FROM AvailableSitsEntity " +
-                    "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(departureDateTime,1,10),'%')" +
-                    "AND departureAirport = :departureAirport " +
-                    "AND arrivalAirport = :arrivalAirport " +
-                    "AND ekoAvailable >= :classSeatsNum"
+                    "a.id, a.flightEntity, a.airplaneEntity, a.seatClassEntity, a.departureEntity, a.arrivalEntity, " +
+                    "a.flightNumber, a.gateNumber, " +
+                    "a.departureDateTime,  a.arrivalDateTime, a.boardingDateTime, " +
+                    "a.departureAirport, a.arrivalAirport, " +
+                    "a.ekoAvailable, a.busAvailable, a.pierAvailable, " +
+                    "a.businessClassAdultPrice, a.businessClassChildPrice, a.businessClassInfantPrice, " +
+                    "a.economicClassAdultPrice, a.economicClassChildPrice, a.economicClassInfantPrice," +
+                    "a.firstClassAdultPrice, a.firstClassChildPrice, a.firstClassInfantPrice, a.price) " +
+                    "FROM AvailableSitsEntity a " +
+                    "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(a.departureDateTime,1,10),'%')" +
+                    "AND a.departureAirport = :departureAirport " +
+                    "AND a.arrivalAirport = :arrivalAirport " +
+                    "AND a.ekoAvailable >= :classSeatsNum"
     )
     Iterable<AvailableSitsEntity> findAvailableEkoSits(@Param("departureDateTime") String departureDateTime,
                                                        @Param("departureAirport")  String departureAirport,
@@ -90,19 +90,19 @@ public interface AvailableSitsRepository extends CrudRepository<AvailableSitsEnt
 
     @Query(
             "SELECT new pl.edu.wat.airline.entities.AvailableSitsEntity(" +
-                    "id, flightEntity, airplaneEntity, seatClassEntity, departureEntity, arrivalEntity, " +
-                    "flightNumber, gateNumber, " +
-                    "departureDateTime,  arrivalDateTime, boardingDateTime, " +
-                    "departureAirport, arrivalAirport, " +
-                    "ekoAvailable, busAvailable, pierAvailable, " +
-                    "businessClassAdultPrice, businessClassChildPrice, businessClassInfantPrice, " +
-                    "economicClassAdultPrice, economicClassChildPrice, economicClassInfantPrice," +
-                    "firstClassAdultPrice, firstClassChildPrice, firstClassInfantPrice, price) " +
-                    "FROM AvailableSitsEntity " +
-                    "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(departureDateTime,1,10),'%')" +
-                    "AND departureAirport = :departureAirport " +
-                    "AND arrivalAirport = :arrivalAirport " +
-                    "AND pierAvailable >= :classSeatsNum"
+                    "a.id, a.flightEntity, a.airplaneEntity, a.seatClassEntity, a.departureEntity, a.arrivalEntity, " +
+                    "a.flightNumber, a.gateNumber, " +
+                    "a.departureDateTime,  a.arrivalDateTime, a.boardingDateTime, " +
+                    "a.departureAirport, a.arrivalAirport, " +
+                    "a.ekoAvailable, a.busAvailable, a.pierAvailable, " +
+                    "a.businessClassAdultPrice, a.businessClassChildPrice, a.businessClassInfantPrice, " +
+                    "a.economicClassAdultPrice, a.economicClassChildPrice, a.economicClassInfantPrice," +
+                    "a.firstClassAdultPrice, a.firstClassChildPrice, a.firstClassInfantPrice, a.price) " +
+                    "FROM AvailableSitsEntity a " +
+                    "WHERE :departureDateTime LIKE CONCAT(SUBSTRING(a.departureDateTime,1,10),'%')" +
+                    "AND a.departureAirport = :departureAirport " +
+                    "AND a.arrivalAirport = :arrivalAirport " +
+                    "AND a.pierAvailable >= :classSeatsNum"
     )
     Iterable<AvailableSitsEntity> findAvailablePierSits(@Param("departureDateTime") String departureDateTime,
                                                         @Param("departureAirport")  String departureAirport,
