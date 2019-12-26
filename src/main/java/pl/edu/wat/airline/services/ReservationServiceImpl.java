@@ -67,25 +67,27 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
 
-    public ReservationDto findByUserLogin(String userLogin) {
-        ReservationEntity reservationEntity = reservationRepository.findByUserLogin(userLogin);
+    public List<ReservationDto> findByUserLogin(String userLogin) {
+        List<ReservationDto> reservationDtos = new ArrayList<>();
 
-        if(reservationEntity == null) {
+        reservationRepository.findByUserLogin(userLogin).forEach(
+                r -> reservationDtos.add(new ReservationDto(r.getReservationNo(),
+                        r.getIsReservationPaid(),
+                        r.getIsOnlineCheckInMade(),
+                        r.getNumOfAdults(),
+                        r.getNumOfInfants(),
+                        r.getNumOfChildren(),
+                        r.getTravelClass(),
+                        r.getReservationPrice(),
+                        getFlightDtoFromReservationEntity(r),
+                        getUserDtoFromReservationEntity(r)))
+        );
+
+        if(reservationDtos.size() == 0){
             return null;
         }
 
-        return new ReservationDto(
-                reservationEntity.getReservationNo(),
-                reservationEntity.getIsReservationPaid(),
-                reservationEntity.getIsOnlineCheckInMade(),
-                reservationEntity.getNumOfAdults(),
-                reservationEntity.getNumOfInfants(),
-                reservationEntity.getNumOfChildren(),
-                reservationEntity.getTravelClass(),
-                reservationEntity.getReservationPrice(),
-                getFlightDtoFromReservationEntity(reservationEntity),
-                getUserDtoFromReservationEntity(reservationEntity)
-                );
+        return reservationDtos;
     }
 
     public ReservationDto findByReservationNo(String reservationNo) {

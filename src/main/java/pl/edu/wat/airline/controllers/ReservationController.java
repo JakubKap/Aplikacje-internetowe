@@ -37,12 +37,12 @@ public class ReservationController {
 //    }
 
     @GetMapping("/user_reservation")
-    public ResponseEntity<ReservationDto> findByUserLogin(@RequestParam String userLogin) {
-        ReservationDto reservationDto = reservationServiceImpl.findByUserLogin(userLogin);
-        if(reservationDto == null) {
+    public ResponseEntity<Iterable<ReservationDto>> findByUserLogin(@RequestParam String userLogin) {
+        List<ReservationDto> reservationDtos = reservationServiceImpl.findByUserLogin(userLogin);
+        if(reservationDtos == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(reservationDto, HttpStatus.OK);
+        return new ResponseEntity<>(reservationDtos, HttpStatus.OK);
     }
 
     @GetMapping("/reservation")
