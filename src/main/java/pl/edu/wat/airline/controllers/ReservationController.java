@@ -6,12 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wat.airline.dtos.ReservationDto;
-import pl.edu.wat.airline.entities.ReservationEntity;
 import pl.edu.wat.airline.services.EmailService;
 import pl.edu.wat.airline.services.ReservationServiceImpl;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -38,7 +34,7 @@ public class ReservationController {
 
     @GetMapping("/user_reservation")
     public ResponseEntity<Iterable<ReservationDto>> findByUserLogin(@RequestParam String userLogin) {
-        List<ReservationDto> reservationDtos = reservationServiceImpl.findByUserLogin(userLogin);
+        Iterable<ReservationDto> reservationDtos = reservationServiceImpl.findByUserLogin(userLogin);
         if(reservationDtos == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -64,11 +60,11 @@ public class ReservationController {
 //        return reservations.save(reservationEntity);
 //    }
     @PostMapping
-    public ResponseEntity addReservation(@RequestBody ReservationDto reservationDto) {
+    public ResponseEntity<ReservationDto> addReservation(@RequestBody ReservationDto reservationDto) {
         ReservationDto savedReservationDto = reservationServiceImpl.addReservation(reservationDto);
 
         if(savedReservationDto == null) {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(savedReservationDto, HttpStatus.OK);
     }

@@ -11,11 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AvailableSitsDto {
 
-    private FlightDto flightDto;
-    private AirportDto departureAirportDto;
-    private AirportDto arrivalAirportDto;
-    private AirplaneDto airplaneDto;
-    private SeatPriceDto seatPriceDto;
+    private String airplaneName;
+    private Integer seatClassCode;
+    private String departureCode;
+    private String arrivalCode;
 
     private String flightNumber;
     private String gateNumber;

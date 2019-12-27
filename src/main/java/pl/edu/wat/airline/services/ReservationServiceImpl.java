@@ -67,7 +67,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
 
-    public List<ReservationDto> findByUserLogin(String userLogin) {
+    public Iterable<ReservationDto> findByUserLogin(String userLogin) {
         List<ReservationDto> reservationDtos = new ArrayList<>();
 
         reservationRepository.findByUserLogin(userLogin).forEach(
@@ -177,8 +177,7 @@ public class ReservationServiceImpl implements ReservationService {
                 reservationDto.getTravelClass(),
                 reservationDto.getReservationPrice(),
                 flightEntity,
-                userEntity
-        );
+                userEntity);
 
         ReservationEntity savedReservationEntity = reservationRepository.save(reservationEntity);
 

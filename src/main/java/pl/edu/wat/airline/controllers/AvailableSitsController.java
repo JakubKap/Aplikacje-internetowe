@@ -8,12 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.wat.airline.dtos.AvailableSitsDto;
-import pl.edu.wat.airline.entities.AvailableSitsEntity;
 import pl.edu.wat.airline.services.AvailableSitsServiceImpl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/available_sits")
@@ -38,8 +34,17 @@ public class AvailableSitsController {
             @RequestParam String arrivalAirport,
             @RequestParam Integer classSeatsNum
     ) {
-        return new ResponseEntity<>(availableSitsServiceImpl
-                .findAvailableBusSits(departureDateTime, departureAirport, arrivalAirport, classSeatsNum), HttpStatus.OK);
+        Iterable<AvailableSitsDto> availableSitsDtos = availableSitsServiceImpl
+                .findAvailableBusSits(
+                        departureDateTime,
+                        departureAirport,
+                        arrivalAirport,
+                        classSeatsNum);
+
+        if(availableSitsDtos == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(availableSitsDtos, HttpStatus.OK);
     }
 
     @GetMapping("eko_sits")
@@ -49,8 +54,17 @@ public class AvailableSitsController {
             @RequestParam String arrivalAirport,
             @RequestParam Integer classSeatsNum
     ) {
-        return new ResponseEntity<>(availableSitsServiceImpl
-                .findAvailableEkoSits(departureDateTime, departureAirport, arrivalAirport, classSeatsNum), HttpStatus.OK);
+        Iterable<AvailableSitsDto> availableSitsDtos = availableSitsServiceImpl
+                .findAvailableEkoSits(
+                        departureDateTime,
+                        departureAirport,
+                        arrivalAirport,
+                        classSeatsNum);
+
+        if(availableSitsDtos == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(availableSitsDtos, HttpStatus.OK);
     }
 
     @GetMapping("pier_sits")
@@ -60,59 +74,16 @@ public class AvailableSitsController {
             @RequestParam String arrivalAirport,
             @RequestParam Integer classSeatsNum
     ) {
-        return new ResponseEntity<>(availableSitsServiceImpl
-                .findAvailablePierSits(departureDateTime, departureAirport, arrivalAirport, classSeatsNum), HttpStatus.OK);
-    }
-//    @GetMapping
-//    public Optional<AvailableSitsEntity> getById(@RequestParam Long id){
-//        return availableSits.findById(id);
-//    }
-//
-//    @GetMapping("available")
-//    public Iterable<AvailableSitsEntity> findAvailableSits(
-//            @RequestParam String departureDateTime,
-//            @RequestParam String departureAirport,
-//            @RequestParam String arrivalAirport,
-//            @RequestParam Integer ekoSeats,
-//            @RequestParam Integer busSeats,
-//            @RequestParam Integer pierSeats
-//    ) {
-//        return availableSits.findAvailableSits(
-//                departureDateTime,
-//                departureAirport,
-//                arrivalAirport,
-//                ekoSeats,
-//                busSeats,
-//                pierSeats);
-//    }
-//
+        Iterable<AvailableSitsDto> availableSitsDtos = availableSitsServiceImpl
+                .findAvailablePierSits(
+                        departureDateTime,
+                        departureAirport,
+                        arrivalAirport,
+                        classSeatsNum);
 
-//
-//    @GetMapping("eko_sits")
-//    public Iterable<AvailableSitsEntity> findAvailableEkoSits(
-//            @RequestParam String departureDateTime,
-//            @RequestParam String departureAirport,
-//            @RequestParam String arrivalAirport,
-//            @RequestParam Integer classSeatsNum
-//    ) {
-//        return availableSits.findAvailableEkoSits(
-//                departureDateTime,
-//                departureAirport,
-//                arrivalAirport,
-//                classSeatsNum);
-//    }
-//
-//    @GetMapping("pier_sits")
-//    public Iterable<AvailableSitsEntity> findAvailablePierSits(
-//            @RequestParam String departureDateTime,
-//            @RequestParam String departureAirport,
-//            @RequestParam String arrivalAirport,
-//            @RequestParam Integer classSeatsNum
-//    ) {
-//        return availableSits.findAvailablePierSits(
-//                departureDateTime,
-//                departureAirport,
-//                arrivalAirport,
-//                classSeatsNum);
-//    }
+        if(availableSitsDtos == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(availableSitsDtos, HttpStatus.OK);
+    }
 }
