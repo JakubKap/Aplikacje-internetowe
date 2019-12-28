@@ -27,10 +27,10 @@ public class FlightController {
     }
 
     @GetMapping("/flight")
-    public ResponseEntity getByFlightNumber(@RequestParam String flightNumber){
+    public ResponseEntity<FlightDto> getByFlightNumber(@RequestParam String flightNumber){
         FlightDto flightDto = flightsServiceImpl.findByFlightNumber(flightNumber);
         if(flightDto == null){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(flightDto, HttpStatus.OK);
@@ -48,11 +48,11 @@ public class FlightController {
     }
 
     @PostMapping
-    public ResponseEntity addFLight(@RequestBody FlightDto flightDto){
+    public ResponseEntity<FlightDto> addFLight(@RequestBody FlightDto flightDto){
          FlightDto savedFlightDto = flightsServiceImpl.addFlight(flightDto);
 
          if(savedFlightDto == null){
-             return new ResponseEntity(HttpStatus.NO_CONTENT);
+             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
          }
 
          return new ResponseEntity<>(savedFlightDto, HttpStatus.OK);
@@ -61,6 +61,11 @@ public class FlightController {
     @PutMapping
     public ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto){
         return new ResponseEntity<>(flightsServiceImpl.updateFlight(flightDto), HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Iterable<FlightDto>> deleteFlight(@RequestBody FlightDto flightDto) {
+        return new ResponseEntity<>(flightsServiceImpl.deleteFlight(flightDto), HttpStatus.OK);
     }
 
 }

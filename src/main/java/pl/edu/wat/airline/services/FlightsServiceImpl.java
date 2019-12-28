@@ -2,6 +2,8 @@ package pl.edu.wat.airline.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.edu.wat.airline.dtos.AirplaneDto;
 import pl.edu.wat.airline.dtos.AirportDto;
 import pl.edu.wat.airline.dtos.FlightDto;
@@ -148,6 +150,30 @@ public class FlightsServiceImpl implements FlightsService {
                  updatedFlightEntity.getBoardingDateTime(), updatedFlightEntity.getGateNumber(), updatedFlightEntity.getStatus(),
                  getDepAirportDtoFromFlightEntity(updatedFlightEntity), getArrAirportDtoFromFlightEntity(updatedFlightEntity), getAirplaneDtoFromFlightEntity(updatedFlightEntity),
                  getSeatPriceDtoFromFlightEntity(updatedFlightEntity));
+    }
+
+    public Iterable<FlightDto> deleteFlight(@RequestBody FlightDto flightDto) {
+        Long flightEntityId = flightsRepository.findByFlightNumber(flightDto.getFlightNumber()).getId();
+
+        List<FlightDto> flightDtos = new ArrayList<>();
+
+        FlightEntity deleteFlightEntity = flightsRepository.findById(flightEntityId).map(f -> {
+            flightsRepository.delete(f);
+            flightDtos
+                    .add(new FlightDto(
+                            f.getFlightNumber(),
+                            f.getDepartureDateTime(),
+                            f.getArrivalDateTime(),
+                            f.getBoardingDateTime(),
+                            f.getGateNumber(),
+                            f.getStatus(),
+                            getDepAirportDtoFromFlightEntity(f),
+                            getArrAirportDtoFromFlightEntity(f),
+                            getAirplaneDtoFromFlightEntity(f),
+                            getSeatPriceDtoFromFlightEntity(f)));
+            return f;
+        }).orElseThrow(() -> new RuntimeException("FlightNumber " + flightDto.getFlightNumber() + " cannot be deleted."));
+        return flightDtos;
     }
 
     private AirportDto getDepAirportDtoFromFlightEntity(FlightEntity flightEntity){
